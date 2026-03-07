@@ -1,19 +1,11 @@
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Neighbourly</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
+@section('content')
 
-
-
-<h2>Search Lost / Found Items</h2>
+<h2>Search Items</h2>
 
 <form method="GET" action="{{ route('lost-items.search') }}">
-    <input type="text" name="query" value="{{ request('query') }}" placeholder="Search by item name or description" required>
+    <input type="text" name="query" value="{{ request('query') }}" placeholder="Search by item name" required>
     <button type="submit">Search</button>
 </form>
 
@@ -46,5 +38,4 @@
         @endif
     </div>
 @endforeach
-</body>
-</html>
+@endsection
