@@ -7,5 +7,9 @@
     <a href="{{ route('lost-items.index') }}">
         <button>Lost & Found</button>
     </a>
+    <br><br>
+    <a href="{{ route('announcements.index') }}">
+        <button>Announcements</button>
+    </a>
 </div>
 @endsection

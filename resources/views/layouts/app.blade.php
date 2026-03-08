@@ -11,7 +11,12 @@
         @auth
             <a href="{{ route('dashboard') }}">Dashboard</a> |
             <a href="{{ route('lost-items.index') }}">Lost & Found</a> |
-            {{-- <a href="{{ route('lost-items.index') }}">Announcements</a> | --}}
+            <a href="{{ route('announcements.index') }}">Announcements</a> |
+            
+            @if(Auth::user()->isAdmin())
+                <a href="{{ route('admin.dashboard') }}">Admin Panel</a> |
+            @endif
+            
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
                 <button type="submit">Logout</button>
