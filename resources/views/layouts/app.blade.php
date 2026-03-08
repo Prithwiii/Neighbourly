@@ -11,6 +11,7 @@
         @auth
             <a href="{{ route('dashboard') }}">Dashboard</a> |
             <a href="{{ route('lost-items.index') }}">Lost & Found</a> |
+            {{-- <a href="{{ route('lost-items.index') }}">Announcements</a> | --}}
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
                 <button type="submit">Logout</button>
