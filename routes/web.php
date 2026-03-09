@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\IssueController;
 use Illuminate\Support\Facades\Route;
 
 // Public welcome page
@@ -37,6 +38,13 @@ Route::middleware(['auth'])->group(function () {
     
     // Show specific announcement (all authenticated users)
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');
+
+    // Community Issues routes
+    Route::get('/issues', [IssueController::class, 'index'])->name('issues.index');
+    Route::get('/issues/create', [IssueController::class, 'create'])->name('issues.create');
+    Route::post('/issues', [IssueController::class, 'store'])->name('issues.store');
+    Route::post('/issues/{issue}/vote', [IssueController::class, 'vote'])->name('issues.vote');
+    Route::post('/issues/{issue}/report-fake', [IssueController::class, 'reportFake'])->name('issues.report-fake');
 
     // Admin-only routes
     Route::middleware(['admin'])->group(function () {
