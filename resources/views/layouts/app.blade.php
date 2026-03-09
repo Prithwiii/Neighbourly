@@ -11,15 +11,12 @@
         @auth
             <a href="{{ route('dashboard') }}">Dashboard</a> |
             <a href="{{ route('lost-items.index') }}">Lost & Found</a> |
-<<<<<<< HEAD
-            <a href="{{ route('lost-items.create') }}">Submit Lost Item</a>
-=======
+            <a href="{{ route('lost-items.create') }}">Submit Lost Item</a> |
             <a href="{{ route('announcements.index') }}">Announcements</a> |
             
             @if(Auth::user()->isAdmin())
                 <a href="{{ route('admin.dashboard') }}">Admin Panel</a> |
             @endif
->>>>>>> fb4efa5e81ea071c47162cd0fc361cad66c82e02
             
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
