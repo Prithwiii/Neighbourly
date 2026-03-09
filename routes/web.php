@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LostItemController;
+use App\Http\Controllers\AnnouncementController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -26,7 +27,6 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/lost-items/search', [LostItemController::class, 'search'])->name('lost-items.search');
-    Route::resource('lost-items', LostItemController::class);
 });
 
 
