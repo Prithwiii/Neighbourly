@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/issues', [IssueController::class, 'store'])->name('issues.store');
     Route::post('/issues/{issue}/vote', [IssueController::class, 'vote'])->name('issues.vote');
     Route::post('/issues/{issue}/report-fake', [IssueController::class, 'reportFake'])->name('issues.report-fake');
+    Route::post('/issues/{issue}/verify', [IssueController::class, 'verify'])->name('issues.verify');
 
     // Admin-only routes
     Route::middleware(['admin'])->group(function () {

@@ -16,7 +16,7 @@ class IssueController extends Controller
      */
     public function index()
     {
-        $issues = Issue::with('user')
+        $issues = Issue::with('user', 'votes', 'fakeReports')
             ->withCount('votes', 'fakeReports')
             ->orderByDesc('created_at')
             ->paginate(10);
@@ -65,7 +65,7 @@ class IssueController extends Controller
 
         // Set the authenticated user as the reporter
         $validated['user_id'] = Auth::id();
-        $validated['status'] = 'open';
+        $validated['status'] = 'under_review';
 
         Issue::create($validated);
 
@@ -113,14 +113,34 @@ class IssueController extends Controller
         if ($existingReport) {
             // Remove the report if already exists (toggle)
             $existingReport->delete();
-            return back()->with('info', 'Report removed.');
+            $message = 'Report removed.';
         } else {
             // Add the fake report
             FakeReport::create([
                 'issue_id' => $issue->id,
                 'user_id' => $userId,
             ]);
-            return back()->with('success', 'Thanks for reporting! We review these.');
+            $message = 'Thanks for reporting! We review these.';
+
+            // Check if issue should be flagged
+            $issue->updateStatusBasedOnReports();
         }
+
+        return back()->with('info', $message);
+    }
+
+    /**
+     * Verify an issue (admin only).
+     */
+    public function verify(Issue $issue)
+    {
+        // Check if user is admin
+        if (!Auth::user()->is_admin) {
+            abort(403, 'Unauthorized');
+        }
+
+        $issue->markAsVerified();
+
+        return back()->with('success', 'Issue marked as verified.');
     }
 }

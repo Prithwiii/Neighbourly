@@ -40,7 +40,7 @@
 
             <!-- Description -->
             <p style="color: #555; margin: 15px 0; line-height: 1.6;">
-                {{ Str::limit($issue->description, 300) }}
+                {{ \Illuminate\Support\Str::limit($issue->description, 300) }}
             </p>
 
             <!-- Image if available -->
@@ -64,11 +64,23 @@
                 </div>
             </div>
 
+            <!-- Status Badge -->
+            <div style="margin: 10px 0;">
+                @php
+                    $statusBadge = $issue->getStatusBadge();
+                @endphp
+                <span style="background-color: {{ $statusBadge['class'] === 'verified' ? '#d4edda' : ($statusBadge['class'] === 'under-review' ? '#fff3cd' : ($statusBadge['class'] === 'flagged' ? '#f8d7da' : '#e2e3e5')) }}; 
+                      color: {{ $statusBadge['class'] === 'verified' ? '#155724' : ($statusBadge['class'] === 'under-review' ? '#856404' : ($statusBadge['class'] === 'flagged' ? '#721c24' : '#383d41')) }}; 
+                      padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold;">
+                    {{ $statusBadge['text'] }}
+                </span>
+            </div>
+
             <!-- Action buttons -->
             <div style="display: flex; gap: 10px; margin-top: 15px;">
                 @php
-                    $userHasVoted = $issue->votes->where('user_id', auth()->id())->count() > 0;
-                    $userHasReported = $issue->fake_reports->where('user_id', auth()->id())->count() > 0;
+                    $userHasVoted = $issue->hasUserVoted(auth()->id());
+                    $userHasReported = $issue->hasUserReported(auth()->id());
                 @endphp
 
                 <form method="POST" action="{{ route('issues.vote', $issue->id) }}" style="display: inline;">
@@ -84,6 +96,15 @@
                         🚩 {{ $userHasReported ? 'Reported' : 'Report Fake' }} ({{ $issue->fake_reports_count }})
                     </button>
                 </form>
+
+                @if(Auth::user()->is_admin && $issue->status === 'under_review')
+                    <form method="POST" action="{{ route('issues.verify', $issue->id) }}" style="display: inline;">
+                        @csrf
+                        <button type="submit" style="background-color: #28a745; color: white; border: 1px solid #28a745; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
+                            ✅ Verify Issue
+                        </button>
+                    </form>
+                @endif
 
                 @if($issue->status === 'resolved')
                     <span style="background-color: #d4edda; color: #155724; padding: 8px 15px; border-radius: 5px; font-weight: bold;">
