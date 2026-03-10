@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/announcements/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('announcements.edit');
         Route::patch('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
         Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
+        Route::post('/announcement', [AnnouncementController::class, 'store'])->middleware(['auth','admin']);
     });
 });
 

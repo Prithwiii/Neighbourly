@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Announcement;
 use Illuminate\Http\Request;
 
-class AnnouncementController extends Controller
+class AnnouncementApiController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $announcements = Announcement::latest()->paginate(10);
-        return view('announcements.index', compact('announcements'));
+        return response()->json(Announcement::latest()->get());
     }
 
     /**
@@ -33,13 +32,16 @@ class AnnouncementController extends Controller
             'headline' => 'required|string|max:255',
             'content' => 'required|string',
         ]);
+        
+        $announcement = Announcement::create($request->only('headline', 'content'));
 
-        Announcement::create([
-            'headline' => $headline = $request->input('headline'),
-            'content' => $content = $request->input('content'),
-        ]);
+        // Announcement::create([
+        //     'headline' => $headline = $request->input('headline'),
+        //     'content' => $content = $request->input('content'),
+        // ]);
 
-        return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
+        // return redirect()->route('announcements.index')->with('success', 'Announcement created successfully.');
+        return response()->json($announcement, 201);
     }
 
     /**
@@ -47,7 +49,7 @@ class AnnouncementController extends Controller
      */
     public function show(Announcement $announcement)
     {
-        //
+        return response()->json($announcement);
     }
 
     /**
