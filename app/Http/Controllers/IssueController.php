@@ -111,20 +111,20 @@ class IssueController extends Controller
             ->first();
 
         if ($existingReport) {
-            // Remove the report if already exists (toggle)
+            // Remove the report if it already exists (toggle off)
             $existingReport->delete();
             $message = 'Report removed.';
         } else {
-            // Add the fake report
+            // Add a new fake report
             FakeReport::create([
                 'issue_id' => $issue->id,
                 'user_id' => $userId,
             ]);
             $message = 'Thanks for reporting! We review these.';
-
-            // Check if issue should be flagged
-            $issue->updateStatusBasedOnReports();
         }
+
+        // After either adding or removing we may need to adjust the issue status.
+        $issue->updateStatusBasedOnReports();
 
         return back()->with('info', $message);
     }
@@ -142,5 +142,25 @@ class IssueController extends Controller
         $issue->markAsVerified();
 
         return back()->with('success', 'Issue marked as verified.');
+    }
+
+    /**
+     * Delete an issue. Only the original reporter
+     * may remove their own submission.
+     */
+    public function destroy(Issue $issue)
+    {
+        if (Auth::id() !== $issue->user_id) {
+            abort(403, 'Unauthorized');
+        }
+
+        // if there is an image attached, delete it from storage
+        if ($issue->image) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($issue->image);
+        }
+
+        $issue->delete();
+
+        return redirect()->route('issues.index')->with('success', 'Issue deleted.');
     }
 }

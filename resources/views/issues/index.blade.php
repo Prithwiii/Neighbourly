@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('content')
 <div style="max-width: 900px; margin: 0 auto; padding: 20px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
@@ -46,7 +50,7 @@
             <!-- Image if available -->
             @if($issue->image)
                 <div style="margin: 15px 0;">
-                    <img src="{{ asset('storage/' . $issue->image) }}" alt="Issue photo" style="max-width: 100%; border-radius: 5px; max-height: 300px;">
+                    <img src="{{ Storage::url($issue->image) }}" alt="Issue photo" style="max-width: 100%; border-radius: 5px; max-height: 300px;">
                 </div>
             @endif
 
@@ -102,6 +106,17 @@
                         @csrf
                         <button type="submit" style="background-color: #28a745; color: white; border: 1px solid #28a745; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
                             ✅ Verify Issue
+                        </button>
+                    </form>
+                @endif
+
+                {{-- allow reporter to delete their own issue --}}
+                @if(auth()->id() === $issue->user_id)
+                    <form method="POST" action="{{ route('issues.destroy', $issue->id) }}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete your issue?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="background-color: #dc3545; color: white; border: 1px solid #dc3545; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: all 0.3s;">
+                            🗑 Delete
                         </button>
                     </form>
                 @endif
