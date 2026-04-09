@@ -35,7 +35,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('lost-items', LostItemController::class);
     // Admin-only announcement creation (MUST come before parameter route)
     Route::middleware(['admin'])->get('/announcements/create', [AnnouncementController::class, 'create'])->name('announcements.create');
-    
+    //map route
+    Route::get('/map', function () {
+    return view('map.map');
+    })->middleware('auth')->name('map');
     // Show specific announcement (all authenticated users)
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');
 
