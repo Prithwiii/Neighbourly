@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route as RouteFacade;
+use App\Models\MarketplaceItem;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Route model binding for marketplace
+        RouteFacade::bind('marketplace', function ($value) {
+            return MarketplaceItem::findOrFail($value);
+        });
+
         // automatically create the storage symlink if missing so
         // uploaded images are visible without requiring manual CLI work
         $link = public_path('storage');
