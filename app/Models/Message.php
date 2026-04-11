@@ -12,6 +12,8 @@ class Message extends Model
         'receiver_id',
         'marketplace_item_id',
         'content',
+        'attachment_path',
+        'attachment_type',
         'is_read',
     ];
 
