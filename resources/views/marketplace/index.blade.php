@@ -85,7 +85,7 @@ use Illuminate\Support\Facades\Storage;
                                 </form>
                             </div>
                         @else
-                            <button type="button" style="background-color: #28a745; color: white; border: none; padding: 10px 18px; border-radius: 5px; cursor: pointer; font-weight: bold;">💬 Send Message</button>
+                            <a href="{{ route('messages.create', $item) }}" style="background-color: #28a745; color: white; padding: 10px 18px; border-radius: 5px; text-decoration: none; display: inline-block; font-weight: bold;">💬 Send Message</a>
                         @endif
                     </div>
                 </div>

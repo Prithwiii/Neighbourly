@@ -64,11 +64,11 @@ use Illuminate\Support\Facades\Storage;
 
                 @if($marketplace->user_id !== auth()->id())
                     <div style="margin-top: 30px;">
-                        <button style="background-color: #28a745; color: white; padding: 12px 30px; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%;">
+                        <a href="{{ route('messages.create', $marketplace) }}" style="background-color: #28a745; color: white; padding: 12px 30px; border-radius: 5px; font-size: 16px; font-weight: bold; text-decoration: none; display: inline-block; width: 100%; text-align: center;">
                             💬 Send Message
-                        </button>
+                        </a>
                         <small style="color: #999; display: block; text-align: center; margin-top: 10px;">
-                            Messaging feature coming soon
+                            Send a message to the seller about this item
                         </small>
                     </div>
                 @endif
