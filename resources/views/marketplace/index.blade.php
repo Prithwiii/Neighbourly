@@ -84,6 +84,8 @@ use Illuminate\Support\Facades\Storage;
                                     <button type="submit" style="background: none; border: none; color: #dc3545; cursor: pointer; text-decoration: underline;">🗑️ Delete</button>
                                 </form>
                             </div>
+                        @else
+                            <button type="button" style="background-color: #28a745; color: white; border: none; padding: 10px 18px; border-radius: 5px; cursor: pointer; font-weight: bold;">💬 Send Message</button>
                         @endif
                     </div>
                 </div>
