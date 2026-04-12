@@ -1,18 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Admins can create announcements here</h1>
+<h2 class="text-2xl font-bold mb-4">Create Issue</h2>
 
-    <form method="POST" action="{{ route('announcements.store') }}" enctype="multipart/form-data">
-        @csrf
-        <div>
-            <div><label for="headline">Headline:</label></div>
-            <div><textarea name="headline" placeholder="Headline" required></textarea></div>
-        </div>
-        <div>
-            <div><label for="content">Content:</label></div>
-            <div><textarea name="content" placeholder="Content" required></textarea></div>
-        </div>
-        <button type="submit">Submit</button>
-    </form>
+<form method="POST" action="/issues">
+    @csrf
+
+    <input type="text" name="title" placeholder="Title"
+        class="w-full p-2 border rounded mb-3">
+
+    <textarea name="description" placeholder="Description"
+        class="w-full p-2 border rounded mb-3"></textarea>
+
+    <button class="bg-green-600 text-white px-4 py-2 rounded">
+        Submit
+    </button>
+</form>
 @endsection

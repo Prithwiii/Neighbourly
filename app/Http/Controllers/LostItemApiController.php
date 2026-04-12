@@ -38,7 +38,7 @@ class LostItemApiController extends Controller
             $file = $request->file('image');
             $filename = time().'_'.$file->getClientOriginalName();
             $file->storeAs('public/lost_items', $filename);
-            $data['image'] = $filename;
+            $data['image'] = 'lost_items/' . $filename;
         }
 
         $item = LostItem::create($data);
