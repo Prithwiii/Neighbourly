@@ -34,7 +34,7 @@
         </h2>
 
         <!-- FORM -->
-        <form method="POST" action="{{ route('password.store') }}" class="space-y-5">
+        <form method="POST" action="{{ route('password.store', absolute: false) }}" class="space-y-5">
             @csrf
 
             <!-- TOKEN -->

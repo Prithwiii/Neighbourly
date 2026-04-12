@@ -34,7 +34,7 @@
         </h2>
 
         <!-- FORM -->
-        <form method="POST" action="{{ route('register') }}" class="space-y-5">
+        <form method="POST" action="{{ route('register', absolute: false) }}" class="space-y-5">
             @csrf
 
             <!-- NAME -->
@@ -93,7 +93,7 @@
         <!-- LOGIN LINK -->
         <p class="text-center text-sm mt-6 text-white">
             Already have an account?
-            <a href="{{ route('login') }}" class="text-emerald-200 font-semibold hover:underline">
+            <a href="{{ route('login', absolute: false) }}" class="text-emerald-200 font-semibold hover:underline">
                 Login
             </a>
         </p>

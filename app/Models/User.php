@@ -5,9 +5,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Message;
 
 class User extends Authenticatable
 {
@@ -66,5 +66,21 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->is_admin;
+    }
+
+    /**
+     * Provider profile linked to this user.
+     */
+    public function serviceProviderProfile(): HasOne
+    {
+        return $this->hasOne(ServiceProvider::class);
+    }
+
+    /**
+     * Reviews made by this user on provider profiles.
+     */
+    public function serviceProviderReviews(): HasMany
+    {
+        return $this->hasMany(ServiceProviderReview::class);
     }
 }

@@ -1,19 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-
-<!-- CENTER HUB -->
 <div class="flex items-center justify-center min-h-screen -mt-14">
 
-    <!-- GLASS CARD -->
     <div class="w-[650px] p-10 rounded-3xl
                 bg-white/20 backdrop-blur-xl
                 border border-white/30
                 shadow-2xl">
-
-        
 
         <div class="grid grid-cols-2 gap-5">
 
@@ -65,11 +58,7 @@
                       shadow-md hover:shadow-xl transition text-center text-emerald-900">
                 Local Services
             </a>
-
         </div>
-
     </div>
-
 </div>
-
 @endsection

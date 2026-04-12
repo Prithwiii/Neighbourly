@@ -45,7 +45,7 @@
         @endif
 
         <!-- FORM -->
-        <form method="POST" action="{{ route('password.email') }}" class="space-y-4">
+        <form method="POST" action="{{ route('password.email', absolute: false) }}" class="space-y-4">
             @csrf
 
             <!-- EMAIL -->
@@ -71,7 +71,7 @@
 
         <!-- BACK -->
         <p class="text-sm mt-6">
-            <a href="{{ route('login') }}" class="text-emerald-200 hover:underline">
+            <a href="{{ route('login', absolute: false) }}" class="text-emerald-200 hover:underline">
                 Back to Login
             </a>
         </p>
