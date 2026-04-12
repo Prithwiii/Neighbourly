@@ -2,38 +2,120 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neighbourly</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body>
-    <nav style="background:#eee; padding:10px;">
-        <a href="{{ url('/') }}">Home</a> |
-        @auth
-            <a href="{{ route('dashboard') }}">Dashboard</a> |
-            <a href="{{ route('lost-items.index') }}">Lost & Found</a> |
-            <a href="{{ route('lost-items.create') }}">Submit Lost Item</a> |
-            <a href="{{ route('announcements.index') }}">Announcements</a> |
-            <a href="{{ route('map') }}">Map</a> |
-            <a href="{{ route('issues.index') }}">Report Issue</a> |
-            <a href="{{ route('marketplace.index') }}">Marketplace</a> |
-            <a href="{{ route('messages.index') }}">Messages</a> |
-            
-            @if(Auth::user()->isAdmin())
-                <a href="{{ route('admin.dashboard') }}">Admin Panel</a> |
-            @endif
-            
-            <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-                @csrf
-                <button type="submit">Logout</button>
-            </form>
-        @else
-            <a href="{{ route('login') }}">Login</a> |
-            <a href="{{ route('register') }}">Register</a>
-        @endauth
-    </nav>
 
-    <div class="container" style="padding:20px;">
-        @yield('content')
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fancy font -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+
+@php
+    $mode = session('ui_mode', 'hub');
+@endphp
+
+<body class="h-screen overflow-hidden bg-emerald-50 text-gray-800">
+
+<!-- 🌍 GLOBAL BACKGROUND IMAGE -->
+<div class="fixed inset-0 -z-10">
+    <img src="{{ asset('images/bg.jpg') }}"
+         class="w-full h-full object-cover">
+</div>
+
+<!-- 🌫 OVERLAY (makes UI readable) -->
+<div class="fixed inset-0 -z-10 bg-black/20"></div>
+
+
+<!-- NAVBAR -->
+<nav class="fixed top-0 left-0 w-full z-50
+            bg-white/20 backdrop-blur-2xl
+            border-b border-white/30
+            shadow-lg">
+
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between relative">
+
+        <!-- FLOATING LOGO -->
+        <div class="absolute left-6 -bottom-10">
+            <div class="w-20 h-20 rounded-full
+                        bg-emerald-500
+                        shadow-2xl
+                        flex items-center justify-center
+                        border-4 border-white
+                        hover:scale-110 transition duration-300">
+
+                <span class="text-white text-2xl font-bold"
+                      style="font-family: 'Pacifico', cursive;">
+                    N
+                </span>
+            </div>
+        </div>
+
+        <!-- BRAND NAME -->
+        <div class="ml-24">
+            <h1 class="text-2xl font-semibold text-emerald-700 tracking-wide">
+                Neighbourly
+            </h1>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="space-x-4 text-sm flex items-center">
+
+            @auth
+
+                @if($mode === 'hub')
+
+                    <a href="{{ route('set.app') }}"
+                       class="text-emerald-700 font-semibold hover:underline">
+                        Home
+                    </a>
+
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600">
+                            Logout
+                        </button>
+                    </form>
+
+                @else
+
+                    <a href="{{ route('set.hub') }}"
+                       class="text-emerald-700 font-semibold hover:underline">
+                        Home
+                    </a>
+
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600">
+                            Logout
+                        </button>
+                    </form>
+
+                @endif
+
+            @else
+
+                <a href="{{ route('login') }}" class="hover:text-emerald-600">
+                    Login
+                </a>
+
+                <a href="{{ route('register') }}"
+                   class="bg-emerald-600 text-white px-3 py-1 rounded-lg hover:bg-emerald-700">
+                    Register
+                </a>
+
+            @endauth
+
+        </div>
+
     </div>
+</nav>
+
+
+<!-- PAGE CONTENT -->
+<main class="pt-28 relative z-10">
+    @yield('content')
+</main>
+
 </body>
 </html>
