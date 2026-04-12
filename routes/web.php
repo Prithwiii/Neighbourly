@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\MessageController;
@@ -72,6 +73,14 @@ Route::middleware(['auth'])->group(function () {
         ->name('lost-items.search');
 
     Route::resource('lost-items', LostItemController::class);
+
+    /*
+    |------------------------------------------
+    | NEWS
+    |------------------------------------------
+    */
+    Route::get('/news', [NewsController::class, 'index'])
+        ->name('news.index');
 
     /*
     |------------------------------------------
