@@ -78,12 +78,25 @@ class Issue extends Model
     {
         $fakeReportsCount = $this->fakeReports()->count();
 
+        // Only adjust status if the issue isn't already verified. A verified
+        // report should not be downgraded by user-driven fake reports.
+        if ($this->status === 'verified') {
+            return;
+        }
+
         if ($fakeReportsCount >= 5) {
-            $this->update(['status' => 'flagged']);
-        } elseif ($this->status === 'under_review' && $fakeReportsCount < 5) {
-            // If it's been under review and hasn't reached 5 fake reports,
-            // we could implement a time-based verification here
-            // For now, we'll keep it under review until manually verified
+            // once threshold reached mark as flagged, no matter previous state
+            if ($this->status !== 'flagged') {
+                $this->update(['status' => 'flagged']);
+            }
+        } else {
+            // if it was previously flagged but reports dipped below threshold,
+            // revert back to under_review so admins can re-evaluate.
+            if ($this->status === 'flagged') {
+                $this->update(['status' => 'under_review']);
+            }
+
+            // otherwise leave status as-is (under_review or open/resolved etc.)
         }
     }
 
