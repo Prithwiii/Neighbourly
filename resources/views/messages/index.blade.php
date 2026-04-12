@@ -16,33 +16,34 @@
         </div>
     @endif
 
-    @if($messages->isEmpty())
+    @if($threads->isEmpty())
         <div style="background-color: #f8fafc; color: #475569; padding: 40px; border-radius: 10px; text-align: center; border: 1px solid #e2e8f0;">
-            <h2 style="margin: 0 0 10px;">No messages yet</h2>
+            <h2 style="margin: 0 0 10px;">No conversations yet</h2>
             <p style="margin: 0;">Send a message from a marketplace listing to start a conversation.</p>
         </div>
     @else
         <div style="display: grid; gap: 16px;">
-            @foreach($messages as $message)
+            @foreach($threads as $thread)
                 <div style="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
                         <div style="font-weight: 700; color: #111827;">
-                            {{ $message->marketplaceItem ? $message->marketplaceItem->title : 'General Message' }}
+                            {{ $thread->marketplaceItem ? $thread->marketplaceItem->title : 'Marketplace Conversation' }}
                         </div>
                         <div style="font-size: 13px; color: #6b7280;">
-                            {{ $message->created_at->diffForHumans() }}
+                            {{ $thread->created_at->diffForHumans() }}
                         </div>
                     </div>
                     <div style="color: #374151; margin-bottom: 12px;">
-                        {{ $message->content }}
+                        {{ $thread->content }}
                     </div>
-                    <div style="font-size: 14px; color: #4b5563; display: flex; flex-wrap: wrap; gap: 12px;">
-                        <span><strong>From:</strong> {{ $message->sender->name }}</span>
-                        <span><strong>To:</strong> {{ $message->receiver->name }}</span>
-                        @if($message->marketplaceItem)
-                            <span><strong>Listing:</strong> <a href="{{ route('marketplace.show', $message->marketplaceItem) }}" style="color: #2563eb; text-decoration: none;">View item</a></span>
+                    <div style="font-size: 14px; color: #4b5563; display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px;">
+                        <span><strong>From:</strong> {{ $thread->sender->name }}</span>
+                        <span><strong>To:</strong> {{ $thread->receiver->name }}</span>
+                        @if($thread->marketplaceItem)
+                            <span><strong>Listing:</strong> <a href="{{ route('marketplace.show', $thread->marketplaceItem) }}" style="color: #2563eb; text-decoration: none;">View item</a></span>
                         @endif
                     </div>
+                    <a href="{{ route('messages.create', $thread->marketplaceItem) }}" style="display: inline-block; background-color: #0d6efd; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none;">Open Conversation</a>
                 </div>
             @endforeach
         </div>
