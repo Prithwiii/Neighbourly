@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 // Public welcome page
@@ -38,6 +39,9 @@ Route::middleware(['auth'])->group(function () {
     // Show specific announcement (all authenticated users)
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])->name('announcements.show');
 
+    // show news page
+    Route::get('/news', [NewsController::class, 'index'])->name('news.index');
+
     // Admin-only routes
     Route::middleware(['admin'])->group(function () {
         // Example admin route - you can add more admin features here
@@ -51,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/announcements/{announcement}', [AnnouncementController::class, 'update'])->name('announcements.update');
         Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
         Route::post('/announcement', [AnnouncementController::class, 'store'])->middleware(['auth','admin']);
+
     });
 });
 

@@ -12,6 +12,7 @@
             <a href="{{ route('dashboard') }}">Dashboard</a> |
             <a href="{{ route('lost-items.index') }}">Lost & Found</a> |
             <a href="{{ route('lost-items.create') }}">Submit Lost Item</a> |
+            <a href="{{ route('news.index') }}">News</a> |
             <a href="{{ route('announcements.index') }}">Announcements</a> |
             
             @if(Auth::user()->isAdmin())

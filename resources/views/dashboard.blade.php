@@ -12,6 +12,10 @@
         <button>Announcements</button>
     </a>
     <br><br>
+    <a href="{{ route('news.index') }}">
+        <button>News</button>
+    </a>
+    <br><br>
     <a href="{{ route('lost-items.create') }}">
         <button>Submit Lost item</button>
     </a>
