@@ -10,4 +10,11 @@
             <button>Create Announcement</button>
         </a>
     </div>
+    <br>
+    <div>
+        <h2>Service Providers</h2>
+        <a href="{{ route('admin.providers.index') }}">
+            <button>Review Provider Applications</button>
+        </a>
+    </div>
 @endsection

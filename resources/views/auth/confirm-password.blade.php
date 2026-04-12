@@ -38,7 +38,7 @@
         </p>
 
         <!-- FORM -->
-        <form method="POST" action="{{ route('password.confirm') }}" class="space-y-4">
+        <form method="POST" action="{{ route('password.confirm', absolute: false) }}" class="space-y-4">
             @csrf
 
             <!-- PASSWORD -->
