@@ -5,6 +5,7 @@ use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\MarketplaceController;
+use App\Http\Controllers\MessageController;
 use Illuminate\Support\Facades\Route;
 
 // Public welcome page
@@ -54,6 +55,12 @@ Route::middleware(['auth'])->group(function () {
 
     // Marketplace routes
     Route::resource('marketplace', \App\Http\Controllers\MarketplaceController::class);
+
+    // Message routes
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/marketplace', [MessageController::class, 'marketplace'])->name('messages.marketplace');
+    Route::get('/messages/create/{marketplace}', [MessageController::class, 'create'])->name('messages.create');
+    Route::post('/messages/{marketplace}', [MessageController::class, 'store'])->name('messages.store');
 
     // Admin-only routes
     Route::middleware(['admin'])->group(function () {

@@ -16,6 +16,7 @@
             <a href="{{ route('map') }}">Map</a> |
             <a href="{{ route('issues.index') }}">Report Issue</a> |
             <a href="{{ route('marketplace.index') }}">Marketplace</a> |
+            <a href="{{ route('messages.index') }}">Messages</a> |
             
             @if(Auth::user()->isAdmin())
                 <a href="{{ route('admin.dashboard') }}">Admin Panel</a> |

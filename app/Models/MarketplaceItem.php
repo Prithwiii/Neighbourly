@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Message;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MarketplaceItem extends Model
 {
@@ -25,5 +27,10 @@ class MarketplaceItem extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'marketplace_item_id');
     }
 }
