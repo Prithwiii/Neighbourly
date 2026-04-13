@@ -41,7 +41,7 @@
         @endif
 
         <!-- FORM -->
-        <form method="POST" action="{{ route('login') }}" class="space-y-5">
+        <form method="POST" action="{{ route('login', absolute: false) }}" class="space-y-5">
             @csrf
 
             <!-- EMAIL -->
@@ -76,7 +76,7 @@
                 </label>
 
                 @if(Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="text-emerald-200 hover:underline">
+                    <a href="{{ route('password.request', absolute: false) }}" class="text-emerald-200 hover:underline">
                         Forgot password?
                     </a>
                 @endif
@@ -94,7 +94,7 @@
         <!-- REGISTER -->
         <p class="text-center text-sm mt-6 text-white">
             Don’t have an account?
-            <a href="{{ route('register') }}" class="text-emerald-200 font-semibold hover:underline">
+            <a href="{{ route('register', absolute: false) }}" class="text-emerald-200 font-semibold hover:underline">
                 Register
             </a>
         </p>

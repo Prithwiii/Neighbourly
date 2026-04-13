@@ -28,7 +28,7 @@
     @endif
 
     <!-- Resend email -->
-    <form method="POST" action="{{ route('verification.send') }}" class="mb-4">
+    <form method="POST" action="{{ route('verification.send', absolute: false) }}" class="mb-4">
         @csrf
 
         <button type="submit"
@@ -38,7 +38,7 @@
     </form>
 
     <!-- Logout -->
-    <form method="POST" action="{{ route('logout') }}">
+    <form method="POST" action="{{ route('logout', absolute: false) }}">
         @csrf
 
         <button type="submit"

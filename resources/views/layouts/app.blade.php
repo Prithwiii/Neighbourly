@@ -15,8 +15,12 @@
     $mode = session('ui_mode', 'hub');
 @endphp
 
+<<<<<<< HEAD
 <!-- {{-- <body class="h-screen overflow-hidden bg-emerald-50 text-gray-800"> --}} -->
 <body class="min-h-screen overflow-y-auto bg-emerald-50 text-gray-800">    
+=======
+<body class="min-h-screen overflow-x-hidden overflow-y-auto bg-emerald-50 text-gray-800">
+>>>>>>> e20a5efc7ef416956768205d8a5fb77ba9712b33
 
 <!-- 🌍 GLOBAL BACKGROUND IMAGE -->
 <div class="fixed inset-0 -z-10">
@@ -114,7 +118,7 @@
 
 
 <!-- PAGE CONTENT -->
-<main class="pt-28 relative z-10">
+<main class="pt-28 relative z-10 min-h-screen pb-10">
     @yield('content')
 </main>
 
