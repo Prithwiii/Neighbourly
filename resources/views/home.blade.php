@@ -59,19 +59,18 @@
                 Map
             </a>
 
-<<<<<<< HEAD
             <a href="{{ route('news.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
                       shadow-md hover:shadow-xl transition text-center text-emerland">
                 News
-=======
+            </a>
+            
             <a href="{{ route('services.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
                       shadow-md hover:shadow-xl transition text-center text-emerald-900">
                 Local Services
->>>>>>> e20a5efc7ef416956768205d8a5fb77ba9712b33
             </a>
 
         </div>
