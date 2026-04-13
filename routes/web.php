@@ -52,7 +52,6 @@ Route::middleware(['auth'])->group(function () {
         // return back();
 =======
         //return back();
->>>>>>> origin/add_frontend_news_announcement
         return redirect('/home');
     })->name('set.app');
 
