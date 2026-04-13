@@ -48,7 +48,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/set-app', function () {
         session(['ui_mode' => 'app']);
+<<<<<<< HEAD
         // return back();
+=======
+        //return back();
+>>>>>>> origin/add_frontend_news_announcement
         return redirect('/home');
     })->name('set.app');
 

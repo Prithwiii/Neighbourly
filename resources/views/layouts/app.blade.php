@@ -15,7 +15,8 @@
     $mode = session('ui_mode', 'hub');
 @endphp
 
-<body class="h-screen bg-emerald-50 text-gray-800">
+<!-- {{-- <body class="h-screen overflow-hidden bg-emerald-50 text-gray-800"> --}} -->
+<body class="min-h-screen overflow-y-auto bg-emerald-50 text-gray-800">    
 
 <!-- 🌍 GLOBAL BACKGROUND IMAGE -->
 <div class="fixed inset-0 -z-10">
