@@ -48,9 +48,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/set-app', function () {
         session(['ui_mode' => 'app']);
-<<<<<<< HEAD
-        // return back();
-=======
+// <<<<<<< HEAD
+
         //return back();
         return redirect('/home');
     })->name('set.app');
