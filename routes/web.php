@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/set-app', function () {
         session(['ui_mode' => 'app']);
-        return back();
+        //return back();
+        return redirect('/home');
     })->name('set.app');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -65,12 +66,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news.index');
-
-    Route::get('/announcements', [AnnouncementController::class, 'index'])
-        ->name('announcements.index');
-
-    Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])
-        ->name('announcements.show');
 
     Route::resource('issues', IssueController::class);
     Route::post('/issues/{issue}/vote', [IssueController::class, 'vote'])->name('issues.vote');
@@ -126,6 +121,17 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/providers/{serviceProvider}/approve', [AdminServiceProviderController::class, 'approve'])->name('admin.providers.approve');
         Route::post('/admin/providers/{serviceProvider}/reject', [AdminServiceProviderController::class, 'reject'])->name('admin.providers.reject');
     });
+    /*
+    |------------------------------------------
+    | ANNOUNCEMENTS
+    |------------------------------------------
+    */
+    Route::get('/announcements', [AnnouncementController::class, 'index'])
+        ->name('announcements.index');
+
+    Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])
+        ->name('announcements.show');
+
 });
 
 require __DIR__.'/auth.php';
