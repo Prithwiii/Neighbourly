@@ -83,16 +83,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news.index');
 
-    /*
-    |------------------------------------------
-    | ANNOUNCEMENTS
-    |------------------------------------------
-    */
-    Route::get('/announcements', [AnnouncementController::class, 'index'])
-        ->name('announcements.index');
-
-    Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])
-        ->name('announcements.show');
 
     /*
     |------------------------------------------
@@ -155,6 +145,17 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/announcements/{announcement}', [AnnouncementController::class, 'destroy'])
             ->name('announcements.destroy');
     });
+
+    /*
+    |------------------------------------------
+    | ANNOUNCEMENTS
+    |------------------------------------------
+    */
+    Route::get('/announcements', [AnnouncementController::class, 'index'])
+        ->name('announcements.index');
+
+    Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])
+        ->name('announcements.show');
 
 });
 
