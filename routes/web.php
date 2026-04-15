@@ -32,9 +32,9 @@ Route::get('/services/{serviceProvider}', [ServiceProviderController::class, 'sh
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
 
     Route::get('/home', function () {
         return view('home');
