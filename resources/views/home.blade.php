@@ -2,19 +2,15 @@
 
 @section('content')
 
-
-
 <!-- CENTER HUB -->
 <div class="flex items-center justify-center min-h-screen -mt-14">
 
-    <!-- GLASS CARD -->
     <div class="w-[650px] p-10 rounded-3xl
                 bg-white/20 backdrop-blur-xl
                 border border-white/30
                 shadow-2xl">
 
-        
-
+        <!-- GRID MENU -->
         <div class="grid grid-cols-2 gap-5">
 
             <a href="{{ route('lost-items.hub') }}"
@@ -59,37 +55,95 @@
                 Map
             </a>
 
-<<<<<<< HEAD
-=======
             <a href="{{ route('services.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
                       shadow-md hover:shadow-xl transition text-center text-emerald-900">
                 Local Services
             </a>
-            
->>>>>>> 5f6719510797eb35471f47db0983be33414a579a
+
+            <a href="{{ route('posts.hub') }}"
+               class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
+                      backdrop-blur-md border border-white/30
+                      shadow-md hover:shadow-xl transition text-center text-emerald-900">
+                Community Blog
+            </a>
+
             <a href="{{ route('news.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
-                      shadow-md hover:shadow-xl transition text-center text-emerland">
-                News
-<<<<<<< HEAD
-            </a>
-            
-            <a href="{{ route('services.index') }}"
-               class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
-                      backdrop-blur-md border border-white/30
                       shadow-md hover:shadow-xl transition text-center text-emerald-900">
-                Local Services
-=======
->>>>>>> 5f6719510797eb35471f47db0983be33414a579a
+                News
             </a>
+
+        </div>
+
+        <!-- EMERGENCY BUTTON (OUTSIDE GRID) -->
+        <div class="mt-6 text-center">
+
+            <button onclick="sendEmergency()"
+                    class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl shadow-lg">
+                🚨 Emergency Help
+            </button>
 
         </div>
 
     </div>
 
 </div>
+
+<!-- SCRIPT (OUTSIDE UI) -->
+<script>
+function sendEmergency() {
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+
+        fetch('/emergency', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert("Emergency sent to nearby users!");
+        });
+
+    });
+
+}
+</script>
+<script>
+function updateLocation() {
+
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+
+        fetch('/update-location', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            })
+        });
+
+    });
+
+}
+
+// run automatically when page loads
+updateLocation();
+</script>
 
 @endsection

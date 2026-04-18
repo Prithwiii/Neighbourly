@@ -12,6 +12,11 @@
 
 </div>
 
+<!-- Pass location from URL -->
+<script>
+    const locationQuery = "{{ request('location') }}";
+</script>
+
 <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQ7vDubyjIhXt__oAxWJCR_bcpj_Un2R4"></script>
 
@@ -34,24 +39,53 @@
             zoom: 13
         });
 
-        // Circle (radius)
+        // 🔴 HOME RADIUS
         new google.maps.Circle({
             center: homeLocation,
             radius: data.radius,
             map: map,
-            fillColor: '#ef4444',   // softer red
+            fillColor: '#ef4444',
             fillOpacity: 0.2,
             strokeColor: '#ef4444',
             strokeOpacity: 0.6,
             strokeWeight: 2
         });
 
-        // Marker
+        // 🏠 HOME MARKER
         new google.maps.Marker({
             position: homeLocation,
             map: map,
             title: 'Your Home'
         });
+
+        // 🔵 POST LOCATION (if exists)
+        if (locationQuery) {
+
+            const geocoder = new google.maps.Geocoder();
+
+            geocoder.geocode({ address: locationQuery }, function(results, status) {
+
+                if (status === 'OK') {
+
+                    const postLocation = results[0].geometry.location;
+
+                    // Move map to post
+                    map.setCenter(postLocation);
+
+                    // Add marker for post
+                    new google.maps.Marker({
+                        position: postLocation,
+                        map: map,
+                        title: locationQuery,
+                        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+                    });
+
+                } else {
+                    console.log("Geocode failed: " + status);
+                }
+
+            });
+        }
 
     });
 </script>
