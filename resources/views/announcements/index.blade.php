@@ -6,17 +6,29 @@
 
 {{-- <div class="h-[calc(100vh-7rem)] overflow-y-auto px-6"> --}}
 
-```
+
 <div class="max-w-3xl mx-auto">
 
     <!-- HEADER -->
-    <div class="mb-6 p-6 rounded-2xl
+    {{-- <div class="mb-6 p-6 rounded-2xl
                 bg-white/20 backdrop-blur-xl
                 border border-white/30 shadow-xl text-center">
 
         <h1 class="text-2xl font-semibold text-emerald-700">
             Announcements
         </h1>
+        <p class="text-gray-700 mt-2">
+            Stay updated with the latest news and updates from our team.
+    </div> --}}
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 20px;">
+        <h1 class="text-2xl font-semibold text-emerald-700">
+            Announcements
+        </h1>
+        @if(auth()->user()->isAdmin())
+            <a href="{{ route('announcements.create') }}" style="background-color: #50C878; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                ➕ Post an Announcement
+            </a>
+        @endif
     </div>
 
     <!-- SUCCESS MESSAGE -->
