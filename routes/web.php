@@ -42,16 +42,17 @@ Route::get('/services/{serviceProvider}', [ServiceProviderController::class, 'sh
 |--------------------------------------------------------------------------
 */ 
 Route::middleware(['auth'])->group(function () {
+    
     Route::get('/dashboard', function () {
+        return redirect('/home');
+    })->name('dashboard');
+
+    Route::get('/home', function () {
         $pendingAlertCount = auth()->user()->isAdmin()
             ? EmergencyAlert::where('status', 'pending')->count()
             : 0;
 
-        return view('dashboard', compact('pendingAlertCount'));
-    })->name('dashboard');
-
-    Route::get('/home', function () {
-        return view('home');
+        return view('home', compact('pendingAlertCount'));
     })->name('home');
 
     Route::get('/set-hub', function () {

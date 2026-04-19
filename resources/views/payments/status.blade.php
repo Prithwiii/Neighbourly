@@ -78,9 +78,9 @@
                 Make another donation
             </a>
 
-            <a href="{{ route('dashboard') }}"
+            <a href="{{ route('home') }}"
                class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50">
-                Back to dashboard
+                Back to home
             </a>
         </div>
     </div>
