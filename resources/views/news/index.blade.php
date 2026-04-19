@@ -17,6 +17,13 @@
         <form method="GET" action="{{ route('news.index') }}"
               class="flex flex-wrap gap-4 items-end justify-between">
 
+            <div class="flex-1 min-w-xs">
+                <label class="text-sm text-gray-700">Search</label>
+                <input type="text" name="query" value="{{ $query ?? '' }}"
+                    placeholder="Search news..."
+                    class="block mt-1 w-full rounded-lg border-gray-300 px-3 py-2">
+            </div>
+
             <div>
                 <label class="text-sm text-gray-700">Sort</label>
                 <select name="sort"

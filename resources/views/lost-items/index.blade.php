@@ -2,102 +2,140 @@
 
 @section('content')
 
-<div class="min-h-[80vh] py-10">
+<div class="min-h-screen py-10">
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
 
-        <!-- HEADER -->
-        <h1 class="text-3xl font-bold text-emerald-700 mb-6 text-center">
-            Lost Items
-        </h1>
+        <!-- LEFT: LIST SECTION -->
+        <div class="md:col-span-2 space-y-6">
 
-        <!-- SEARCH BAR (GLASS STYLE) -->
-        <form method="GET" action="{{ route('lost-items.search') }}"
-              class="flex gap-3 mb-8 max-w-2xl mx-auto">
+            
 
-            <input type="text" name="query"
-                value="{{ request('query') }}"
-                placeholder="Search lost items..."
-                class="flex-1 p-3 rounded-xl
-                       bg-white/40 backdrop-blur-md
-                       border border-white/30
-                       focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                required>
+            <!-- SEARCH -->
+            <form method="GET" action="{{ route('lost-items.search') }}"
+                  class="flex gap-3">
 
-            <button class="px-5 py-3 rounded-xl
-                           bg-emerald-600 text-white
-                           hover:bg-emerald-700 transition">
-                Search
-            </button>
-        </form>
+                <input type="text" name="query"
+                    value="{{ request('query') }}"
+                    placeholder="Search lost items..."
+                    class="flex-1 p-3 rounded-xl bg-white border border-gray-200
+                           focus:outline-none focus:ring-2 focus:ring-emerald-400">
 
-        <!-- SUCCESS MESSAGE -->
-        @if(session('success'))
-            <div class="max-w-2xl mx-auto mb-6 p-3 rounded-xl
-                        bg-green-100 text-green-700 text-center">
-                {{ session('success') }}
-            </div>
-        @endif
+                <button class="px-5 py-3 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition">
+                    Search
+                </button>
 
-        <!-- EMPTY STATE -->
-        @if($items->isEmpty())
-            <p class="text-center text-gray-500">
-                No items found.
-            </p>
-        @endif
+            </form>
 
-        <!-- ITEMS GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- SUCCESS -->
+            @if(session('success'))
+                <div class="p-3 rounded-xl bg-green-100 text-green-700 text-center">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-            @foreach($items as $item)
+            <!-- EMPTY -->
+            @if($items->isEmpty())
+                <p class="text-gray-500 text-center py-10">
+                    No items found.
+                </p>
+            @endif
 
-                <div class="rounded-2xl p-5
-                            bg-white/30 backdrop-blur-xl
-                            border border-white/30
-                            shadow-lg hover:shadow-2xl
-                            transition">
+            <!-- LIST -->
+            <div class="space-y-5">
 
-                    <div class="flex gap-4">
+                @foreach($items as $item)
 
-                        <!-- IMAGE -->
-                        @if($item->image)
-                            <img src="{{ asset('storage/' . $item->image) }}"
-                                 class="w-28 h-28 md:w-32 md:h-32
-                                        object-cover rounded-xl border border-white/30">
-                        @else
-                            <div class="w-28 h-28 md:w-32 md:h-32
-                                        flex items-center justify-center
-                                        bg-white/40 rounded-xl text-gray-500 text-sm">
-                                No Image
+                    <div class="group bg-white/70 backdrop-blur-md
+                                rounded-2xl border border-white
+                                shadow-sm hover:shadow-xl
+                                transition transform hover:-translate-y-1">
+
+                        <div class="flex gap-5 p-5">
+
+                            <!-- IMAGE -->
+                            @if($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}"
+                                     class="w-28 h-28 object-cover rounded-xl border border-gray-200 group-hover:scale-105 transition">
+                            @else
+                                <div class="w-28 h-28 flex items-center justify-center bg-gray-100 rounded-xl text-gray-500 text-sm">
+                                    No Image
+                                </div>
+                            @endif
+
+                            <!-- INFO -->
+                            <div class="flex-1 space-y-1">
+
+                                <h2 class="text-lg font-semibold text-gray-800 group-hover:text-emerald-700 transition">
+                                    {{ $item->username }}
+                                </h2>
+
+                                <p class="text-sm text-gray-600">
+                                    📞 {{ $item->phone }}
+                                </p>
+
+                                <p class="text-gray-700 leading-relaxed">
+                                    {{ $item->description }}
+                                </p>
+
+                                <a href="{{ route('map') }}?location={{ urlencode($item->location) }}"
+                                   class="hover:text-emerald-600 transition">
+                                    Location 
+                                </a>
+
                             </div>
-                        @endif
-
-                        <!-- INFO -->
-                        <div class="flex-1">
-
-                            <h2 class="text-lg font-semibold text-gray-800">
-                                {{ $item->username }}
-                            </h2>
-
-                            <p class="text-sm text-gray-600 mt-1">
-                                📞 {{ $item->phone }}
-                            </p>
-
-                            <p class="text-gray-700 mt-2">
-                                {{ $item->description }}
-                            </p>
-
-                            <p class="text-xs text-gray-500 mt-3">
-                                📍 {{ $item->location }} • {{ $item->date_lost }}
-                            </p>
 
                         </div>
 
                     </div>
 
+                @endforeach
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT: FLOATING INFO PANEL -->
+        <div class="md:col-span-1">
+
+            <div class="sticky top-10">
+
+                <div class="relative p-8 rounded-3xl
+                            bg-white/40 backdrop-blur-xl
+                            border border-white/40
+                            shadow-2xl overflow-hidden">
+
+                    <!-- soft glow -->
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-emerald-300/30 blur-3xl rounded-full animate-pulse"></div>
+                    <div class="absolute -bottom-10 -left-10 w-52 h-52 bg-emerald-400/20 blur-3xl rounded-full animate-pulse"></div>
+
+                    <div class="relative space-y-5">
+
+                        <h2 class="text-3xl font-bold text-white leading-tight">
+                            Help reunite lost items
+                        </h2>
+
+                        <p class="text-white text-lg leading-relaxed">
+                            Every listing represents something meaningful to someone.
+                            A small action from you can complete a big story.
+                        </p>
+
+                        <div class="space-y-2 text-sm text-white">
+                            <p> Use keywords to filter quickly</p>
+                            <p> Check location carefully</p>
+                            <p> Contact owners when matched</p>
+                        </div>
+
+                        <a href="{{ route('lost-items.create') }}"
+                           class="block text-center mt-6 px-5 py-3 bg-emerald-500 text-white rounded-xl font-medium hover:bg-emerald-600 transition transform hover:scale-[1.02]">
+                            Report Lost Item
+                        </a>
+
+                    </div>
+
                 </div>
 
-            @endforeach
+            </div>
 
         </div>
 
