@@ -96,16 +96,6 @@
                 Local Services
             </a>
 
-<<<<<<< HEAD
-=======
-            <a href="{{ route('posts.hub') }}"
-               class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
-                      backdrop-blur-md border border-white/30
-                      shadow-md hover:shadow-xl transition text-center text-emerald-900">
-                Community Blog
-            </a>
-
->>>>>>> 0f904aed0f51464e6dc8a420db3df9a48e7570a7
                 <a href="{{ route('emergency-alerts.index') }}"
                     class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                              backdrop-blur-md border border-white/30
@@ -113,7 +103,6 @@
                      Emergency Alerts
                 </a>
             
-<<<<<<< HEAD
             <a href="{{ route('posts.hub') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
@@ -121,8 +110,6 @@
                 Community Blog
             </a>
 
-=======
->>>>>>> 0f904aed0f51464e6dc8a420db3df9a48e7570a7
             <a href="{{ route('news.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
