@@ -2,84 +2,75 @@
 
 @section('content')
 
-<!-- SCROLLABLE WRAPPER -->
-
-{{-- <div class="h-[calc(100vh-7rem)] overflow-y-auto px-6"> --}}
-
-
-<div class="max-w-3xl mx-auto">
+<div class="max-w-3xl mx-auto px-4 py-8 space-y-6">
 
     <!-- HEADER -->
-    {{-- <div class="mb-6 p-6 rounded-2xl
-                bg-white/20 backdrop-blur-xl
-                border border-white/30 shadow-xl text-center">
+    <div class="flex items-center justify-between p-4 rounded-2xl
+                bg-white/20 backdrop-blur-xl border border-white/30 shadow-md">
 
         <h1 class="text-2xl font-semibold text-emerald-700">
             Announcements
         </h1>
-        <p class="text-gray-700 mt-2">
-            Stay updated with the latest news and updates from our team.
-    </div> --}}
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 20px;">
-        <h1 class="text-2xl font-semibold text-emerald-700">
-            Announcements
-        </h1>
+
         @if(auth()->user()->isAdmin())
-            <a href="{{ route('announcements.create') }}" style="background-color: #50C878; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-                ➕ Post an Announcement
+            <a href="{{ route('announcements.create') }}"
+               class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                      bg-emerald-600 text-white text-sm font-medium
+                      hover:bg-emerald-700 transition shadow">
+                ➕ Post Announcement
             </a>
         @endif
     </div>
 
     <!-- SUCCESS MESSAGE -->
     @if(session('success'))
-        <div class="mb-4 p-4 rounded-xl
-                    bg-green-100 text-green-700
-                    border border-green-300 shadow">
+        <div class="p-4 rounded-xl bg-emerald-100 text-emerald-700
+                    border border-emerald-300 shadow-sm">
             {{ session('success') }}
         </div>
     @endif
 
-    <!-- ANNOUNCEMENTS -->
-    @forelse($announcements as $announcement)
+    <!-- ANNOUNCEMENTS LIST -->
+    <div class="space-y-5">
 
-        <div class="mb-6 p-6 rounded-2xl
-                    bg-white/20 backdrop-blur-xl
-                    border border-white/30 shadow-xl
-                    hover:shadow-2xl transition">
+        @forelse($announcements as $announcement)
 
-            <!-- TITLE -->
-            <h2 class="text-xl font-semibold mb-2">
-                {{ $announcement->headline }}
-            </h2>
+            <div class="p-6 rounded-2xl
+                        bg-white/20 backdrop-blur-xl
+                        border border-white/30 shadow-lg
+                        hover:shadow-xl transition">
 
-            <!-- CONTENT -->
-            <p class="text-gray-700 mb-4">
-                {{ $announcement->content }}
-            </p>
+                <!-- TITLE -->
+                <h2 class="text-xl font-semibold text-gray-800 mb-2">
+                    {{ $announcement->headline }}
+                </h2>
 
-            <!-- META -->
-            <div class="text-xs text-gray-600">
-                Posted on {{ $announcement->created_at->format('M d, Y') }}
+                <!-- CONTENT -->
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    {{ $announcement->content }}
+                </p>
+
+                <!-- META -->
+                <div class="text-xs text-gray-500 flex justify-between items-center">
+                    <span>Posted on {{ $announcement->created_at->format('M d, Y') }}</span>
+                </div>
+
             </div>
 
-        </div>
+        @empty
 
-    @empty
+            <div class="text-center py-10 text-gray-500">
+                No announcements yet.
+            </div>
 
-        <div class="text-center text-gray-700">
-            No announcements yet.
-        </div>
+        @endforelse
 
-    @endforelse
-
-    <!-- PAGINATION -->
-    <div class="mt-6">
-        {{ $announcements->links() }}
     </div>
 
-</div>
-```
+    <!-- PAGINATION -->
+    <div class="pt-4">
+        {{ $announcements->links() }}
+    </div>
 
 </div>
 
