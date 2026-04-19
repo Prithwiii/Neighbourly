@@ -76,8 +76,22 @@
             <a href="{{ route('news.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
-                      shadow-md hover:shadow-xl transition text-center text-emerland">
+                      shadow-md hover:shadow-xl transition text-center text-emerald-900">
                 News
+            </a>
+
+            <a href="{{ route('enlistings.index') }}"
+               class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
+                      backdrop-blur-md border border-white/30
+                      shadow-md hover:shadow-xl transition text-center text-emerald-900">
+                Enlist for Work
+            </a>
+
+            <a href="{{ route('jobs.index') }}"
+               class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
+                      backdrop-blur-md border border-white/30
+                      shadow-md hover:shadow-xl transition text-center text-emerald-900">
+                Jobs
             </a>
 
         </div>
