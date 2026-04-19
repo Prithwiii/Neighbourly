@@ -23,6 +23,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'lat',
+        'lng',
         // note: is_admin is intentionally omitted to prevent mass assignment during registration
     ];
 

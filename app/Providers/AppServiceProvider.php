@@ -4,6 +4,10 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Route as RouteFacade;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
+
 use App\Models\MarketplaceItem;
 
 class AppServiceProvider extends ServiceProvider
@@ -36,5 +40,19 @@ class AppServiceProvider extends ServiceProvider
                 // ignore; failure usually means permission issues on the host
             }
         }
-    }
+     
+        View::composer('*', function ($view) {
+
+            $unreadCount = 0;
+
+            if (\Illuminate\Support\Facades\Auth::check()) {
+              $unreadCount = \Illuminate\Support\Facades\Auth::user()
+                ->unreadNotifications()
+                ->count();
+            }
+
+             $view->with('unreadCount', $unreadCount);
+        });    
+    }   
+    
 }

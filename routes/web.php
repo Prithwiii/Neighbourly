@@ -10,9 +10,15 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\ServiceProviderReviewController;
+<<<<<<< HEAD
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobConfirmationController;
 use App\Http\Controllers\EnlistingController;
+=======
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\EmergencyController;
+use App\Http\Controllers\LocationController;
+>>>>>>> c7877293008d94ef876af4351321ca18697edb73
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,11 +39,17 @@ Route::get('/services/{serviceProvider}', [ServiceProviderController::class, 'sh
 |--------------------------------------------------------------------------
 | AUTHENTICATED ROUTES
 |--------------------------------------------------------------------------
-*/
+*/ 
 Route::middleware(['auth'])->group(function () {
+<<<<<<< HEAD
     Route::get('/home', function () {
         return view('home');
     })->name('home');
+=======
+    //Route::get('/dashboard', function () {
+      //  return view('dashboard');
+    //})->name('dashboard');
+>>>>>>> c7877293008d94ef876af4351321ca18697edb73
 
     Route::get('/home', function () {
         return view('home');
@@ -50,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/set-app', function () {
         session(['ui_mode' => 'app']);
+// <<<<<<< HEAD
+
         //return back();
         return redirect('/home');
     })->name('set.app');
@@ -66,6 +80,17 @@ Route::middleware(['auth'])->group(function () {
         ->name('lost-items.search');
 
     Route::resource('lost-items', LostItemController::class);
+
+    Route::get('/community', function () {
+        return view('posts.hub');
+    })->name('posts.hub');
+
+    Route::get('/community/all', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/community/create', function () {
+           return view('posts.create');
+    })->name('posts.create');
+    
+    Route::post('/community', [PostController::class, 'store'])->name('posts.store');
 
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news.index');
@@ -94,6 +119,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/map', function () {
         return view('map.map');
     })->name('map');
+     
+    Route::post('/emergency', [EmergencyController::class, 'trigger']);
+
+    Route::get('/notifications', function () {
+         return view('notifications');
+    })->name('notifications');
+
+
+
+    Route::post('/update-location', [LocationController::class, 'update']);
+
+
 
     // Service provider self-registration and account actions
     Route::get('/join-provider', [ServiceProviderController::class, 'create'])->name('providers.create');
