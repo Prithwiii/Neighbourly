@@ -95,20 +95,6 @@ Route::middleware(['auth'])->group(function () {
         return view('map.map');
     })->name('map');
 
-    // Microjob-board routes
-    // Enlistings
-    Route::resource('enlistings', EnlistingController::class)
-        ->only(['index', 'create', 'store', 'show', 'destroy']);
-
-    // Jobs
-    Route::resource('jobs', JobController::class)
-        ->only(['index', 'create', 'store', 'show', 'destroy']);
-
-    // Confirm job
-    Route::post('/jobs/{job}/confirm', [JobConfirmationController::class, 'confirm'])
-        ->name('jobs.confirm');
-
-
     // Service provider self-registration and account actions
     Route::get('/join-provider', [ServiceProviderController::class, 'create'])->name('providers.create');
     Route::post('/join-provider', [ServiceProviderController::class, 'store'])->name('providers.store');
@@ -122,7 +108,7 @@ Route::middleware(['auth'])->group(function () {
 
     /*
     |------------------------------------------
-    | ANNOUNCEMENTS
+    | Admin-only routes
     |------------------------------------------
     */
 
@@ -160,6 +146,33 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])
         ->name('announcements.show');
+
+
+     /*
+    |------------------------------------------
+    | Microjobs
+    |------------------------------------------
+    */
+    // Enlistings
+    Route::resource('enlistings', EnlistingController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
+    Route::get('/enlistings', [EnlistingController::class, 'index'])->name('enlistings.index');
+    Route::get('/enlistings/create', [EnlistingController::class, 'create'])->name('enlistings.create');
+    Route::post('/enlistings', [EnlistingController::class, 'store'])->name('enlistings.store');
+    Route::get('/enlistings/{enlisting}', [EnlistingController::class, 'show'])->name('enlistings.show');
+    Route::delete('/enlistings/{enlisting}', [EnlistingController::class, 'destroy'])->name('enlistings.destroy');
+
+
+    // Jobs
+    Route::resource('jobs', JobController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
+    Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+    Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+    Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+    Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
+
+
+    // Confirm job
+    Route::post('/jobs/{job}/confirm', [JobConfirmationController::class, 'confirm'])->name('jobs.confirm');
 
 });
 
