@@ -2,36 +2,53 @@
 
 @section('content')
 
-<div class="min-h-screen  py-10">
+<div class="min-h-screen flex items-center justify-center px-6 py-10">
 
-    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row gap-8">
+    <div class="w-full max-w-7xl grid md:grid-cols-3 gap-10">
 
-        <!-- LEFT SIDE: MAP -->
-        <div class="md:w-2/3">
+        <!-- LEFT: MAP -->
+        <div class="md:col-span-2 relative">
 
-            <div id="map" class="w-full h-[520px] rounded-2xl shadow-sm border border-gray-100"></div>
+            <!-- soft glow behind map -->
+            <div class="absolute -top-10 -left-10 w-72 h-72 bg-emerald-400/10 blur-3xl rounded-full"></div>
+
+            <div id="map"
+                 class="w-full h-[550px] rounded-3xl
+                        border border-white/10
+                        shadow-2xl overflow-hidden"></div>
 
         </div>
 
-        <!-- RIGHT SIDE: WRITING PANEL -->
-        <div class="md:w-1/3">
+        <!-- RIGHT: FLOATING INFO PANEL -->
+        <div class="md:col-span-1">
 
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 h-full">
+            <div class="sticky top-10 relative">
 
-                <h1 class="text-3xl font-bold text-gray-800 leading-tight">
-                    Explore your surroundings
-                </h1>
+                <!-- glow -->
+                <div class="absolute -top-10 -right-10 w-60 h-60 bg-emerald-400/20 blur-3xl rounded-full"></div>
 
-                <p class="text-gray-600 mt-4 leading-relaxed">
-                    This map shows your home area and nearby activity.
-                    Posts and emergency alerts appear based on your location.
-                </p>
+                <!-- CARD -->
+                <div class="relative p-8 rounded-3xl
+                            bg-white/10 backdrop-blur-xl
+                            border border-white/10
+                            shadow-2xl text-white space-y-6">
 
-                <div class="mt-6 space-y-3 text-sm text-gray-500">
+                    <h1 class="text-3xl font-semibold leading-tight">
+                        Explore your surroundings
+                    </h1>
 
-                    <p>🏠 Green circle = your home radius</p>
-                    <p>📍 Blue marker = post location</p>
-                    <p>🚨 Red marker = emergency alert</p>
+                    <p class="text-white/70 leading-relaxed">
+                        This map shows your home area and nearby activity.
+                        Posts and alerts appear based on your location.
+                    </p>
+
+                    <div class="space-y-2 text-sm text-white/50">
+
+                        <p> Green circle = home radius</p>
+                        <p> Blue marker = post location</p>
+                        <p> Red marker = emergency alert</p>
+
+                    </div>
 
                 </div>
 
@@ -49,9 +66,7 @@
 <script>
 const locationQuery = "{{ request('location') }}";
 
-/* 🚨 EMERGENCY LAT/LNG FROM URL */
 const urlParams = new URLSearchParams(window.location.search);
-
 const emergencyLat = parseFloat(urlParams.get('lat'));
 const emergencyLng = parseFloat(urlParams.get('lng'));
 
@@ -70,29 +85,30 @@ fetch('/api/home-radius', {
         center: (emergencyLat && emergencyLng)
             ? { lat: emergencyLat, lng: emergencyLng }
             : homeLocation,
-        zoom: 13
+        zoom: 13,
+        disableDefaultUI: true
     });
 
-    /* 🏠 HOME RADIUS */
+    // HOME RADIUS
     new google.maps.Circle({
         center: homeLocation,
         radius: data.radius,
         map: map,
         fillColor: '#10b981',
-        fillOpacity: 0.15,
+        fillOpacity: 0.12,
         strokeColor: '#10b981',
         strokeOpacity: 0.6,
         strokeWeight: 2
     });
 
-    /* 🏠 HOME MARKER */
+    // HOME MARKER
     new google.maps.Marker({
         position: homeLocation,
         map: map,
-        title: 'Your Home'
+        title: 'Home'
     });
 
-    /* 📍 POST LOCATION (TEXT BASED) */
+    // POST LOCATION
     if (locationQuery) {
 
         const geocoder = new google.maps.Geocoder();
@@ -108,7 +124,6 @@ fetch('/api/home-radius', {
                 new google.maps.Marker({
                     position: postLocation,
                     map: map,
-                    title: locationQuery,
                     icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
                 });
 
@@ -117,13 +132,12 @@ fetch('/api/home-radius', {
         });
     }
 
-    /* 🚨 EMERGENCY MARKER */
+    // EMERGENCY
     if (emergencyLat && emergencyLng) {
 
         new google.maps.Marker({
             position: { lat: emergencyLat, lng: emergencyLng },
             map: map,
-            title: "Emergency Location",
             icon: "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
         });
 

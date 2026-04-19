@@ -2,77 +2,100 @@
 
 @section('content')
 
-<div class="min-h-screen flex items-center justify-center px-4 ">
+<div class="min-h-screen flex items-center px-10">
 
-    <!-- MAIN HUB CARD -->
-    <div class="w-full max-w-2xl p-10 rounded-3xl
-                bg-white/30 backdrop-blur-xl
-                border border-white/40
-                shadow-2xl text-center">
+    <div class="w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
 
-        <!-- TITLE -->
-        <h1 class="text-4xl font-bold text-emerald-700">
-            Lost & Found
-        </h1>
+        <!-- LEFT SIDE: WRITING (OUTSIDE HUB) -->
+        <div class="space-y-6 animate-fadeIn">
 
-        <!-- DESCRIPTION -->
-        <p class="text-gray-600 mt-4 leading-relaxed text-lg">
-            A simple way to reconnect people with their lost belongings.
-            Report what you’ve lost or share items you’ve found to help someone in your community.
-        </p>
+            <h1 class="text-6xl font-bold text-white leading-tight">
+                Lost & Found
+            </h1>
 
-        <!-- SMALL INFO TEXT -->
-        <div class="mt-6 text-sm text-gray-500 space-y-1">
-            <p>🔍 Search lost items instantly</p>
-            <p>📦 Report found belongings</p>
-            <p>🤝 Help your community reconnect</p>
+            <p class="text-white text-lg leading-relaxed max-w-md">
+                A simple way to reconnect people with their lost belongings.
+                No complexity, no noise — just a direct path to help someone recover what matters.
+            </p>
+
+            <div class="space-y-2 text-l text-white">
+                <p> Search items instantly</p>
+                <p> Report found belongings</p>
+                <p> Community-driven recovery</p>
+            </div>
+
         </div>
 
-        <!-- ACTION BOXES -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+        <!-- RIGHT SIDE: MINI HUB ONLY (2 OPTIONS + ANIMATION) -->
+        <div class="relative">
 
-            <!-- LOST ITEM -->
-            <a href="{{ route('lost-items.search') }}"
-               class="p-8 rounded-2xl
-                      bg-white/40 hover:bg-white/60
-                      backdrop-blur-md
-                      border border-white/40
-                      shadow-md hover:shadow-xl
-                      transition transform hover:scale-105">
+            <!-- FLOATING ANIMATION ELEMENT -->
+            <div class="absolute -top-10 -right-10 w-40 h-40 bg-emerald-300/30 blur-3xl rounded-full animate-pulse"></div>
+            <div class="absolute -bottom-10 -left-10 w-52 h-52 bg-emerald-400/20 blur-3xl rounded-full animate-pulse"></div>
 
-                <h2 class="text-xl font-semibold text-red-600">
-                    I have lost an item
+            <!-- HUB CARD -->
+            <div class="relative p-8 rounded-3xl
+                        bg-white/30 backdrop-blur-xl
+                        border border-white/40
+                        shadow-2xl space-y-6">
+
+                <!-- SMALL TITLE -->
+                <h2 class="text-center text-xl font-semibold text-gray-700">
+                    What would you like to do?
                 </h2>
 
-                <p class="text-gray-600 mt-2">
-                    Search through reported items
-                </p>
+                <!-- OPTION 1 -->
+                <a href="{{ route('lost-items.search') }}"
+                   class="block p-6 rounded-2xl
+                          bg-white/40 hover:bg-white/70
+                          border border-white/40
+                          shadow-md hover:shadow-xl
+                          transition transform hover:scale-105">
 
-            </a>
+                    <p class="text-red-600 font-semibold text-lg">
+                        I have lost an item
+                    </p>
 
-            <!-- FOUND ITEM -->
-            <a href="{{ route('lost-items.create') }}"
-               class="p-8 rounded-2xl
-                      bg-white/40 hover:bg-white/60
-                      backdrop-blur-md
-                      border border-white/40
-                      shadow-md hover:shadow-xl
-                      transition transform hover:scale-105">
+                    <p class="text-gray-600 text-sm mt-1">
+                        Search for something you’ve misplaced
+                    </p>
 
-                <h2 class="text-xl font-semibold text-emerald-600">
-                    I have found an item
-                </h2>
+                </a>
 
-                <p class="text-gray-600 mt-2">
-                    Help return it to its owner
-                </p>
+                <!-- OPTION 2 -->
+                <a href="{{ route('lost-items.create') }}"
+                   class="block p-6 rounded-2xl
+                          bg-white/40 hover:bg-white/70
+                          border border-white/40
+                          shadow-md hover:shadow-xl
+                          transition transform hover:scale-105">
 
-            </a>
+                    <p class="text-emerald-600 font-semibold text-lg">
+                        I have found an item
+                    </p>
+
+                    <p class="text-gray-600 text-sm mt-1">
+                        Help return it to its owner
+                    </p>
+
+                </a>
+
+            </div>
 
         </div>
 
     </div>
-
 </div>
+
+<!-- SIMPLE FADE -->
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+    animation: fadeIn 0.8s ease-out both;
+}
+</style>
 
 @endsection

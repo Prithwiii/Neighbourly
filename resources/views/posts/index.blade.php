@@ -34,15 +34,15 @@
     <div class="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row gap-10">
 
         <!-- LEFT SIDE (BIG + ANIMATED WRITING) -->
-        <div class="md:w-1/3 md:sticky md:top-10 self-start animate-fade">
+        <div class="md:w-1/3 md:sticky md:top-10 self-start ">
 
-            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center float-slow">
+            <div class=" rounded-2xl border border-gray-100 shadow-sm p-8 text-center ">
 
-                <h2 class="text-4xl font-bold text-gray-800 leading-tight">
+                <h2 class="text-6xl font-bold text-white leading-tight">
                     Read <br> thoughts
                 </h2>
 
-                <p class="text-gray-600 mt-5 text-lg leading-relaxed">
+                <p class="text-white mt-5 text-lg leading-relaxed">
                     Discover stories, ideas, and moments shared by people in your community.
                     Scroll through posts and explore what others are thinking.
                 </p>
@@ -59,30 +59,27 @@
         </div>
 
         <!-- RIGHT SIDE (SCROLLING POSTS) -->
-        <div class="md:w-2/3 space-y-6 animate-fade">
+        <div class="md:w-2/3 space-y-6 ">
 
-            <h1 class="text-3xl font-semibold text-gray-800 mb-6">
-                Community Blog
-            </h1>
-
+            
             @forelse($posts as $post)
 
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition">
+                <div class="rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition">
 
                     <div class="flex flex-col md:flex-row gap-5">
 
                         <!-- TEXT -->
                         <div class="flex-1">
 
-                            <h2 class="font-semibold text-gray-800 text-lg">
+                            <h2 class="font-semibold text-white text-lg">
                                 {{ $post->username }}
                             </h2>
 
-                            <p class="text-gray-600 mt-3 leading-relaxed">
+                            <p class="text-white mt-3 leading-relaxed">
                                 {{ $post->content }}
                             </p>
 
-                            <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
+                            <div class="mt-4 flex items-center justify-between text-sm text-white">
 
                                 <a href="{{ route('map') }}?location={{ urlencode($post->location) }}"
                                    class="hover:text-emerald-600 transition">

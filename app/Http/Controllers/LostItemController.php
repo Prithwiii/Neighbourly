@@ -32,7 +32,7 @@ class LostItemController extends Controller
 
         $data = [];
         $data['username'] = auth()->user()->name;
-        $data['location'] = auth()->user()->location ?? 'Unknown location';
+        $data['location'] = auth()->user()->location;
         $data['phone'] = $request->phone;
         $data['description'] = $request->description;
         $data['date_lost'] = $request->date_lost;

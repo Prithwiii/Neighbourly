@@ -76,19 +76,19 @@
 
                 @if($mode === 'hub')
 
-                    <a href="{{ route('home') }}" class="hover:text-emerald-200 transition">
+                    <a href="{{ route('home') }}" class="hover:text-emerald-200 text-xl transition">
                         Home
                     </a>
 
                 @else
 
-                    <a href="{{ route('home') }}" class="hover:text-emerald-200 transition">
+                    <a href="{{ route('home') }}" class="hover:text-emerald-200 text-xl transition">
                         Home
                     </a>
 
                 @endif
 
-                <a href="{{ route('notifications') }}" class="relative hover:text-emerald-200 transition">
+                <a href="{{ route('notifications') }}" class="relative hover:text-emerald-200 text-xl transition">
 
                     Notifications
 
