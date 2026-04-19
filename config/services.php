@@ -40,4 +40,12 @@ return [
     'topic' => env('NEWS_API_TOPIC'),
     ],
 
+    'sslcommerz' => [
+        'store_id' => env('SSLCOMMERZ_STORE_ID'),
+        'store_password' => env('SSLCOMMERZ_STORE_PASSWORD'),
+        'sandbox' => env('SSLCOMMERZ_SANDBOX', true),
+        'currency' => env('SSLCOMMERZ_CURRENCY', 'BDT'),
+        'mock_mode' => env('SSLCOMMERZ_MOCK_MODE', false),
+    ],
+
 ];

@@ -10,6 +10,7 @@ use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
+use App\Models\DonationPost;
 use App\Models\EmergencyAlert;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\ServiceProviderReviewController;
@@ -133,6 +134,13 @@ Route::middleware(['auth'])->group(function () {
     */
 
     Route::middleware(['admin'])->group(function () {
+        Route::get('/admin/dashboard', function () {
+            $pendingAlertCount = EmergencyAlert::where('status', 'pending')->count();
+            $pendingDonationCount = DonationPost::where('approval_status', 'pending')->count();
+
+            return view('admin.dashboard', compact('pendingAlertCount', 'pendingDonationCount'));
+        })->name('admin.dashboard');
+
         Route::post('/issues/{issue}/verify', [IssueController::class, 'verify'])->name('issues.verify');
 
         Route::get('/admin/emergency-alerts', [AdminEmergencyAlertController::class, 'index'])
@@ -205,3 +213,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/payments.php';
+require __DIR__.'/donation-posts.php';

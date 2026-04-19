@@ -5,6 +5,7 @@ use App\Http\Controllers\LostItemApiController;
 use App\Http\Controllers\AnnouncementApiController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\Payments\DonationPaymentApiController;
 
 Route::get('/lost-items', [LostItemApiController::class, 'index']);
 Route::post('/lost-items', [LostItemApiController::class, 'store']);
@@ -22,3 +23,5 @@ Route::get('/news', [NewsController::class, 'apiIndex']);
 // });
 
 Route::get('/home-radius', [MapController::class, 'homeRadius']);   
+
+Route::post('/donate', [DonationPaymentApiController::class, 'store']);
