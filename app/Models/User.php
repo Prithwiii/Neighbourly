@@ -83,4 +83,36 @@ class User extends Authenticatable
     {
         return $this->hasMany(ServiceProviderReview::class);
     }
+
+    /**
+     * Emergency alerts created by this user.
+     */
+    public function emergencyAlerts(): HasMany
+    {
+        return $this->hasMany(EmergencyAlert::class);
+    }
+
+    /**
+     * Comments made by this user on emergency alerts.
+     */
+    public function emergencyAlertComments(): HasMany
+    {
+        return $this->hasMany(EmergencyAlertComment::class);
+    }
+
+    /**
+     * Donation requests created by this user.
+     */
+    public function donationPosts(): HasMany
+    {
+        return $this->hasMany(DonationPost::class);
+    }
+
+    /**
+     * Donation transactions made by this user.
+     */
+    public function donationTransactions(): HasMany
+    {
+        return $this->hasMany(DonationTransaction::class);
+    }
 }
