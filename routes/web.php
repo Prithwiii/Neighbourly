@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\AdminServiceProviderController;
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AdminEmergencyAlertController;
+use App\Http\Controllers\EmergencyAlertController;
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
+use App\Models\EmergencyAlert;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\ServiceProviderReviewController;
 use Illuminate\Support\Facades\Route;
@@ -32,9 +35,13 @@ Route::get('/services/{serviceProvider}', [ServiceProviderController::class, 'sh
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
+    Route::get('/dashboard', function () {
+        $pendingAlertCount = auth()->user()->isAdmin()
+            ? EmergencyAlert::where('status', 'pending')->count()
+            : 0;
+
+        return view('dashboard', compact('pendingAlertCount'));
+    })->name('dashboard');
 
     Route::get('/home', function () {
         return view('home');
@@ -66,6 +73,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news.index');
+
+    Route::get('/emergency-alerts', [EmergencyAlertController::class, 'index'])
+        ->name('emergency-alerts.index');
+    Route::get('/emergency-alerts/create', [EmergencyAlertController::class, 'create'])
+        ->name('emergency-alerts.create');
+    Route::post('/emergency-alerts', [EmergencyAlertController::class, 'store'])
+        ->name('emergency-alerts.store');
+    Route::get('/emergency-alerts/{emergencyAlert}', [EmergencyAlertController::class, 'show'])
+        ->name('emergency-alerts.show');
+    Route::delete('/emergency-alerts/{emergencyAlert}', [EmergencyAlertController::class, 'destroy'])
+        ->name('emergency-alerts.destroy');
+    Route::post('/emergency-alerts/{emergencyAlert}/comments', [EmergencyAlertController::class, 'storeComment'])
+        ->name('emergency-alerts.comments.store');
 
     Route::resource('issues', IssueController::class);
     Route::post('/issues/{issue}/vote', [IssueController::class, 'vote'])->name('issues.vote');
@@ -104,6 +124,13 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['admin'])->group(function () {
         Route::post('/issues/{issue}/verify', [IssueController::class, 'verify'])->name('issues.verify');
+
+        Route::get('/admin/emergency-alerts', [AdminEmergencyAlertController::class, 'index'])
+            ->name('admin.emergency-alerts.index');
+        Route::post('/admin/emergency-alerts/{emergencyAlert}/approve', [AdminEmergencyAlertController::class, 'approve'])
+            ->name('admin.emergency-alerts.approve');
+        Route::post('/admin/emergency-alerts/{emergencyAlert}/reject', [AdminEmergencyAlertController::class, 'reject'])
+            ->name('admin.emergency-alerts.reject');
 
         Route::get('/announcements/create', [AnnouncementController::class, 'create'])
             ->name('announcements.create');
