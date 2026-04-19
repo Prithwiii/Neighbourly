@@ -10,6 +10,9 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\ServiceProviderReviewController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\JobConfirmationController;
+use App\Http\Controllers\EnlistingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,6 +95,20 @@ Route::middleware(['auth'])->group(function () {
         return view('map.map');
     })->name('map');
 
+    // Microjob-board routes
+    // Enlistings
+    Route::resource('enlistings', EnlistingController::class)
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
+
+    // Jobs
+    Route::resource('jobs', JobController::class)
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
+
+    // Confirm job
+    Route::post('/jobs/{job}/confirm', [JobConfirmationController::class, 'confirm'])
+        ->name('jobs.confirm');
+
+
     // Service provider self-registration and account actions
     Route::get('/join-provider', [ServiceProviderController::class, 'create'])->name('providers.create');
     Route::post('/join-provider', [ServiceProviderController::class, 'store'])->name('providers.store');
@@ -101,6 +118,13 @@ Route::middleware(['auth'])->group(function () {
 
     // Ratings and reviews for verified providers
     Route::post('/services/{serviceProvider}/reviews', [ServiceProviderReviewController::class, 'store'])->name('services.reviews.store');
+
+
+    /*
+    |------------------------------------------
+    | ANNOUNCEMENTS
+    |------------------------------------------
+    */
 
     Route::middleware(['admin'])->group(function () {
         Route::post('/issues/{issue}/verify', [IssueController::class, 'verify'])->name('issues.verify');
@@ -120,7 +144,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/providers', [AdminServiceProviderController::class, 'index'])->name('admin.providers.index');
         Route::post('/admin/providers/{serviceProvider}/approve', [AdminServiceProviderController::class, 'approve'])->name('admin.providers.approve');
         Route::post('/admin/providers/{serviceProvider}/reject', [AdminServiceProviderController::class, 'reject'])->name('admin.providers.reject');
+
+        // Job deletion for admin
+        Route::delete('/admin/jobs/{job}', [JobController::class, 'destroy']);
+        Route::delete('/admin/enlistings/{enlisting}', [EnlistingController::class, 'destroy']);
     });
+
     /*
     |------------------------------------------
     | ANNOUNCEMENTS
