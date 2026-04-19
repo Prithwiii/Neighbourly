@@ -169,6 +169,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
     Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
     Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
+    Route::post('/jobs/{job}/select-worker', [JobController::class, 'selectWorker'])->name('jobs.selectWorker');
 
 
     // Confirm job
