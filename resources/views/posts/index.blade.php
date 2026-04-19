@@ -2,50 +2,122 @@
 
 @section('content')
 
-<div class="min-h-[80vh] py-10">
+<style>
+    /* Simple fade + slide animation */
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-    <div class="max-w-4xl mx-auto">
+    .animate-fade {
+        animation: fadeUp 0.8s ease-out both;
+    }
 
-        <!-- TITLE -->
-        <h1 class="text-3xl font-bold text-emerald-700 text-center mb-6">
-            Community Blog
-        </h1>
+    .float-slow {
+        animation: float 6s ease-in-out infinite;
+    }
 
-        
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-6px); }
+    }
+</style>
 
-        <!-- POSTS -->
-        @forelse($posts as $post)
+<div class="min-h-screen ">
 
-            <div class="mb-6 p-5 rounded-2xl bg-white/30 backdrop-blur-xl border shadow">
+    <div class="max-w-6xl mx-auto px-4 py-10 flex flex-col md:flex-row gap-10">
 
-                <h2 class="font-semibold text-lg text-gray-800">
-                    {{ $post->username }}
+        <!-- LEFT SIDE (BIG + ANIMATED WRITING) -->
+        <div class="md:w-1/3 md:sticky md:top-10 self-start animate-fade">
+
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 text-center float-slow">
+
+                <h2 class="text-4xl font-bold text-gray-800 leading-tight">
+                    Read <br> thoughts
                 </h2>
 
-                <p class="text-gray-700 mt-2">
-                    {{ $post->content }}
+                <p class="text-gray-600 mt-5 text-lg leading-relaxed">
+                    Discover stories, ideas, and moments shared by people in your community.
+                    Scroll through posts and explore what others are thinking.
                 </p>
 
-                @if($post->image)
-                    <img src="{{ asset('storage/' . $post->image) }}"
-                         class="mt-3 rounded-lg max-h-60 object-cover">
-                @endif
-
-                <p class="text-xs text-gray-500 mt-3">
-                    <a href="{{ route('map') }}?location={{ urlencode($post->location) }}"
-                        class="text-blue-600 underline">
-                       📍 {{ $post->location }}
-                     </a>
-                     • {{ $post->created_at->diffForHumans() }}
-                </p>
+                <div class="mt-8">
+                    <a href="{{ route('posts.create') }}"
+                       class="inline-block px-7 py-3 bg-emerald-500 text-white rounded-full text-sm font-medium hover:bg-emerald-600 transition">
+                        Share your thoughts
+                    </a>
+                </div>
 
             </div>
 
-        @empty
-            <p class="text-center text-gray-500">
-                No posts yet.
-            </p>
-        @endforelse
+        </div>
+
+        <!-- RIGHT SIDE (SCROLLING POSTS) -->
+        <div class="md:w-2/3 space-y-6 animate-fade">
+
+            <h1 class="text-3xl font-semibold text-gray-800 mb-6">
+                Community Blog
+            </h1>
+
+            @forelse($posts as $post)
+
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-md transition">
+
+                    <div class="flex flex-col md:flex-row gap-5">
+
+                        <!-- TEXT -->
+                        <div class="flex-1">
+
+                            <h2 class="font-semibold text-gray-800 text-lg">
+                                {{ $post->username }}
+                            </h2>
+
+                            <p class="text-gray-600 mt-3 leading-relaxed">
+                                {{ $post->content }}
+                            </p>
+
+                            <div class="mt-4 flex items-center justify-between text-sm text-gray-500">
+
+                                <a href="{{ route('map') }}?location={{ urlencode($post->location) }}"
+                                   class="hover:text-emerald-600 transition">
+                                    Location {{ $post->location }}
+                                </a>
+
+                                <span>
+                                    {{ $post->created_at->diffForHumans() }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <!-- IMAGE -->
+                        @if($post->image)
+                            <div class="md:w-44 md:h-44 w-full h-56 flex-shrink-0">
+                                <img src="{{ asset('storage/' . $post->image) }}"
+                                     class="w-full h-full object-cover rounded-xl border border-gray-200">
+                            </div>
+                        @endif
+
+                    </div>
+
+                </div>
+
+            @empty
+
+                <div class="text-center text-gray-500 mt-10">
+                    No posts yet.
+                </div>
+
+            @endforelse
+
+        </div>
 
     </div>
 

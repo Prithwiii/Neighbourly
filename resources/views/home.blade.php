@@ -1,14 +1,48 @@
 @extends('layouts.app')
 
+
+
 @section('content')
 
-<!-- CENTER HUB -->
-<div class="flex items-center justify-center min-h-screen -mt-14">
+<div class="min-h-screen flex items-center justify-center px-6 relative overflow-x-hidden">
 
-    <div class="w-[650px] p-10 rounded-3xl
-                bg-white/20 backdrop-blur-xl
-                border border-white/30
-                shadow-2xl">
+    <!-- 🟢 TOP LEFT BRAND BLOCK -->
+    <div class="hidden lg:block absolute top-10 left-10 text-white max-w-xs">
+
+        <h1 class="text-6xl font-bold leading-tight">
+            Neighbourly
+        </h1>
+
+        <p class="text-white/100 mt-3 text-l leading-relaxed">
+            A community platform where people connect, help each other,
+            and stay informed about what’s happening around them.
+        </p>
+
+    </div>
+
+
+
+    <!-- 🟢 RIGHT BIG WRITING -->
+    <div class="hidden lg:block absolute right-10 top-1/2 -translate-y-1/2 text-white max-w-xs text-right">
+
+        <h2 class="text-6xl font-bold leading-snug">
+            Stay connected<br>with your community
+        </h2>
+
+        <p class="text-white/100 mt-4 text-l leading-relaxed">
+            Everything you need is in one place.
+            From finding lost items to helping others,
+            Neighbourly brings real-world connections into one simple platform.
+        </p>
+
+    </div>
+
+    <!-- 🧠 CENTER HUB (YOUR CODE UNCHANGED) -->
+    
+    <div class="w-[1000px] py-6 px-10 rounded-3xl
+            bg-white/20 backdrop-blur-xl
+            border border-white/30
+            shadow-2xl translate-x-6">
 
         <!-- GRID MENU -->
         <div class="grid grid-cols-2 gap-5">
@@ -78,7 +112,7 @@
 
         </div>
 
-        <!-- EMERGENCY BUTTON (OUTSIDE GRID) -->
+        <!-- EMERGENCY -->
         <div class="mt-6 text-center">
 
             <button onclick="sendEmergency()"
@@ -92,7 +126,7 @@
 
 </div>
 
-<!-- SCRIPT (OUTSIDE UI) -->
+<!-- SCRIPTS (UNCHANGED) -->
 <script>
 function sendEmergency() {
 
@@ -118,6 +152,7 @@ function sendEmergency() {
 
 }
 </script>
+
 <script>
 function updateLocation() {
 
@@ -142,7 +177,6 @@ function updateLocation() {
 
 }
 
-// run automatically when page loads
 updateLocation();
 </script>
 

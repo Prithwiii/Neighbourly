@@ -2,36 +2,61 @@
 
 @section('content')
 
-<div class="max-w-3xl mx-auto py-10">
+<style>
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(18px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
-    <h1 class="text-2xl font-bold text-emerald-700 mb-6 text-center">
-        Create Post
-    </h1>
+    .animate-fade {
+        animation: fadeUp 0.7s ease-out both;
+    }
+</style>
 
-    <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data"
-          class="p-5 rounded-2xl bg-white/30 backdrop-blur-xl border">
+<div class="min-h-screen  flex items-center justify-center px-4 py-12">
 
-        @csrf
+    <div class="w-full max-w-2xl animate-fade">
 
-        <input type="text" name="username"
-               placeholder="Your name"
-               class="w-full mb-3 p-3 rounded-lg border" required>
+        <!-- HEADER -->
+        <div class="text-center mb-8">
 
-        <textarea name="content"
-                  placeholder="Write something..."
-                  class="w-full mb-3 p-3 rounded-lg border" required></textarea>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">
+                Share your thoughts
+            </h1>
 
-        <input type="text" name="location"
-               placeholder="Location (click map later)"
-               class="w-full mb-3 p-3 rounded-lg border">
+            <p class="text-gray-500 mt-2">
+                Write something meaningful and publish it to your community.
+            </p>
 
-        <input type="file" name="image" class="mb-3">
+        </div>
 
-        <button class="bg-emerald-600 text-white px-5 py-2 rounded-lg">
-            Post
-        </button>
+        <!-- FORM -->
+        <form method="POST" action="{{ route('posts.store') }}" enctype="multipart/form-data"
+              class="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-4">
 
-    </form>
+            @csrf
+
+            <!-- CONTENT -->
+            <textarea name="content"
+                      placeholder="What's on your mind?"
+                      rows="6"
+                      class="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-emerald-400 outline-none resize-none"
+                      required></textarea>
+
+            <!-- IMAGE -->
+            <div class="border border-gray-200 rounded-xl p-3">
+                <input type="file" name="image" class="w-full text-sm text-gray-600">
+            </div>
+
+            <!-- BUTTON -->
+            <button type="submit"
+                    class="w-full bg-emerald-500 text-white py-3 rounded-xl font-medium hover:bg-emerald-600 transition">
+                Post
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
 

@@ -20,18 +20,22 @@ class PostController extends Controller
     {
         // Validation
         $request->validate([
-            'username' => 'required|string|max:255',
+           
             'content' => 'required|string',
-            'location' => 'nullable|string|max:255',
+           
             'image' => 'nullable|image',
         ]);
 
         // Get basic data
-        $data = $request->only(['username', 'content', 'location']);
+        $data = [];
+        $data['username'] = auth()->user()->name;
+      
+        $data['location'] = auth()->user()->location;
 
         // ✅ ADD USER GEO LOCATION (IMPORTANT FIX)
         $data['lat'] = auth()->user()->lat;
         $data['lng'] = auth()->user()->lng;
+        $data['content'] = $request->input('content');
 
         // Handle image upload
         if ($request->hasFile('image')) {

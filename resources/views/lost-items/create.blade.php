@@ -2,12 +2,12 @@
 
 @section('content')
 
-<div class="min-h-[80vh] flex items-center justify-center relative">
+<div class="min-h-screen flex items-center justify-center px-4 ">
 
     <!-- GLASS CARD -->
-    <div class="w-[550px] p-8 rounded-3xl
-                bg-white/25 backdrop-blur-xl
-                border border-white/30
+    <div class="w-full max-w-xl p-8 rounded-3xl
+                bg-white/30 backdrop-blur-xl
+                border border-white/40
                 shadow-2xl">
 
         <h1 class="text-3xl font-bold text-emerald-700 mb-6 text-center">
@@ -17,11 +17,7 @@
         <form method="POST" action="/lost-items" enctype="multipart/form-data" class="space-y-4">
             @csrf
 
-            <!-- Name -->
-            <input type="text" name="username" placeholder="Your Name"
-                class="w-full p-3 rounded-xl bg-white/60 border border-gray-200
-                       focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                required>
+            
 
             <!-- Phone -->
             <input type="text" name="phone" placeholder="Phone Number"
@@ -34,12 +30,6 @@
                 class="w-full p-3 rounded-xl bg-white/60 border border-gray-200
                        focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 required></textarea>
-
-            <!-- Location -->
-            <input type="text" name="location" placeholder="Location"
-                class="w-full p-3 rounded-xl bg-white/60 border border-gray-200
-                       focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                required>
 
             <!-- Date -->
             <input type="date" name="date_lost"

@@ -27,6 +27,7 @@ class EmergencyNotification extends Notification
             'message' => $this->user->name . " needs emergency help nearby!",
             'lat' => $this->user->lat,
             'lng' => $this->user->lng,
+            
         ];
     }
 }
