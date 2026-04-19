@@ -53,6 +53,18 @@
                 <!-- META -->
                 <div class="text-xs text-gray-500 flex justify-between items-center">
                     <span>Posted on {{ $announcement->created_at->format('M d, Y') }}</span>
+
+                    @if(auth()->user()->isAdmin())
+                        <form action="{{ route('announcements.destroy', $announcement) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this announcement?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl
+                                                       bg-red-600 text-white text-sm font-medium
+                                                       hover:bg-red-700 transition shadow">
+                                🗑️ Delete
+                            </button>
+                        </form>
+                    @endif
                 </div>
 
             </div>
