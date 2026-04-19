@@ -14,6 +14,9 @@ use App\Models\DonationPost;
 use App\Models\EmergencyAlert;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\ServiceProviderReviewController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\JobConfirmationController;
+use App\Http\Controllers\EnlistingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -123,6 +126,13 @@ Route::middleware(['auth'])->group(function () {
     // Ratings and reviews for verified providers
     Route::post('/services/{serviceProvider}/reviews', [ServiceProviderReviewController::class, 'store'])->name('services.reviews.store');
 
+
+    /*
+    |------------------------------------------
+    | Admin-only routes
+    |------------------------------------------
+    */
+
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin/dashboard', function () {
             $pendingAlertCount = EmergencyAlert::where('status', 'pending')->count();
@@ -155,7 +165,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/providers', [AdminServiceProviderController::class, 'index'])->name('admin.providers.index');
         Route::post('/admin/providers/{serviceProvider}/approve', [AdminServiceProviderController::class, 'approve'])->name('admin.providers.approve');
         Route::post('/admin/providers/{serviceProvider}/reject', [AdminServiceProviderController::class, 'reject'])->name('admin.providers.reject');
+
+        // Job deletion for admin
+        Route::delete('/admin/jobs/{job}', [JobController::class, 'destroy']);
+        Route::delete('/admin/enlistings/{enlisting}', [EnlistingController::class, 'destroy']);
     });
+
     /*
     |------------------------------------------
     | ANNOUNCEMENTS
@@ -166,6 +181,34 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/announcements/{announcement}', [AnnouncementController::class, 'show'])
         ->name('announcements.show');
+
+
+     /*
+    |------------------------------------------
+    | Microjobs
+    |------------------------------------------
+    */
+    // Enlistings
+    Route::resource('enlistings', EnlistingController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
+    Route::get('/enlistings', [EnlistingController::class, 'index'])->name('enlistings.index');
+    Route::get('/enlistings/create', [EnlistingController::class, 'create'])->name('enlistings.create');
+    Route::post('/enlistings', [EnlistingController::class, 'store'])->name('enlistings.store');
+    Route::get('/enlistings/{enlisting}', [EnlistingController::class, 'show'])->name('enlistings.show');
+    Route::delete('/enlistings/{enlisting}', [EnlistingController::class, 'destroy'])->name('enlistings.destroy');
+
+
+    // Jobs
+    Route::resource('jobs', JobController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
+    Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+    Route::get('/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+    Route::post('/jobs', [JobController::class, 'store'])->name('jobs.store');
+    Route::get('/jobs/{job}', [JobController::class, 'show'])->name('jobs.show');
+    Route::delete('/jobs/{job}', [JobController::class, 'destroy'])->name('jobs.destroy');
+    Route::post('/jobs/{job}/select-worker', [JobController::class, 'selectWorker'])->name('jobs.selectWorker');
+
+
+    // Confirm job
+    Route::post('/jobs/{job}/confirm', [JobConfirmationController::class, 'confirm'])->name('jobs.confirm');
 
 });
 
