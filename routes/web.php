@@ -42,7 +42,6 @@ Route::get('/services/{serviceProvider}', [ServiceProviderController::class, 'sh
 |--------------------------------------------------------------------------
 */ 
 Route::middleware(['auth'])->group(function () {
-<<<<<<< HEAD
     Route::get('/dashboard', function () {
         $pendingAlertCount = auth()->user()->isAdmin()
             ? EmergencyAlert::where('status', 'pending')->count()
@@ -50,11 +49,6 @@ Route::middleware(['auth'])->group(function () {
 
         return view('dashboard', compact('pendingAlertCount'));
     })->name('dashboard');
-=======
-    //Route::get('/dashboard', function () {
-      //  return view('dashboard');
-    //})->name('dashboard');
->>>>>>> 0f904aed0f51464e6dc8a420db3df9a48e7570a7
 
     Route::get('/home', function () {
         return view('home');
