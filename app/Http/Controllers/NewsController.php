@@ -14,10 +14,11 @@ class NewsController extends Controller
         $sortBy = $request->input('sort', 'publishedAt');
         $from   = $request->input('from');
         $to     = $request->input('to');
+        $query  = $request->input('query');
 
-        $articles = $this->newsService->getNews($sortBy, $from, $to);
+        $articles = $this->newsService->getNews($sortBy, $from, $to, $query);
 
-        return view('news.index', compact('articles', 'sortBy', 'from', 'to'));
+        return view('news.index', compact('articles', 'sortBy', 'from', 'to', 'query'));
     }
 
     public function apiIndex(Request $request)
@@ -25,8 +26,9 @@ class NewsController extends Controller
         $sortBy = $request->input('sort', 'publishedAt');
         $from   = $request->input('from');
         $to     = $request->input('to');
+        $query  = $request->input('query');
 
-        $articles = $this->newsService->getNews($sortBy, $from, $to);
+        $articles = $this->newsService->getNews($sortBy, $from, $to, $query);
 
         return response()->json($articles);
     }

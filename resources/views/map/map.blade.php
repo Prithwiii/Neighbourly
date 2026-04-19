@@ -22,7 +22,7 @@
         <!-- RIGHT: FLOATING INFO PANEL -->
         <div class="md:col-span-1">
 
-            <div class="sticky top-10 relative">
+            <div class="sticky top-10">
 
                 <!-- glow -->
                 <div class="absolute -top-10 -right-10 w-60 h-60 bg-emerald-400/20 blur-3xl rounded-full"></div>

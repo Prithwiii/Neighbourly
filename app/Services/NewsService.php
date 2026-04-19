@@ -7,16 +7,17 @@ use Illuminate\Support\Facades\Cache;
 
 class NewsService
 {
-    public function getNews(string $sortBy = 'publishedAt', ?string $from = null, ?string $to = null): array
+    public function getNews(string $sortBy = 'publishedAt', ?string $from = null, ?string $to = null, ?string $query = null): array
     {
         $topic = config('services.newsapi.topic');
         $key   = config('services.newsapi.key');
 
-        $cacheKey = "news_{$topic}_{$sortBy}_{$from}_{$to}";
+        $searchQuery = $query ?? $topic;
+        $cacheKey = "news_{$searchQuery}_{$sortBy}_{$from}_{$to}";
 
-        return Cache::remember($cacheKey, 3600, function () use ($topic, $key, $sortBy, $from, $to) {
+        return Cache::remember($cacheKey, 3600, function () use ($searchQuery, $key, $sortBy, $from, $to) {
             $params = [
-                'q'        => $topic,
+                'q'        => $searchQuery,
                 'sortBy'   => $sortBy,
                 'pageSize' => 10,
                 'apiKey'   => $key,
