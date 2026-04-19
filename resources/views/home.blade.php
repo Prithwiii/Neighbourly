@@ -96,7 +96,6 @@
                 Local Services
             </a>
 
-<<<<<<< HEAD
                 <a href="{{ route('emergency-alerts.index') }}"
                     class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                              backdrop-blur-md border border-white/30
@@ -104,7 +103,6 @@
                      Emergency Alerts
                 </a>
             
-=======
             <a href="{{ route('posts.hub') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
@@ -112,7 +110,6 @@
                 Community Blog
             </a>
 
->>>>>>> prithwi-all
             <a href="{{ route('news.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
