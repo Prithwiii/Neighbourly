@@ -25,7 +25,10 @@
 
         <div>
             <label>Phone Number</label><br>
-            <input type="text" name="phone" value="{{ old('phone') }}" required style="width:100%; padding:8px;">
+            <div style="display:flex; align-items:center; gap:0; width:100%;">
+                <span style="padding:8px 12px; background:#f3f4f6; border:1px solid #d1d5db; border-right:none; border-radius:6px 0 0 6px; color:#374151; white-space:nowrap;">+880</span>
+                <input type="text" name="phone" value="{{ old('phone') }}" placeholder="1XXXXXXXXX" required style="width:100%; padding:8px; border:1px solid #d1d5db; border-radius:0 6px 6px 0;">
+            </div>
         </div>
 
         <div>

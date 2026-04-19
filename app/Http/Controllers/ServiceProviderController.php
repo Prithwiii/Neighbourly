@@ -93,6 +93,8 @@ class ServiceProviderController extends Controller
             'document' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
+        $validated['phone'] = $this->normalizeBangladeshPhone($validated['phone']);
+
         if (Auth::user()->serviceProviderProfile) {
             return back()->withErrors(['full_name' => 'You already have a provider profile.'])->withInput();
         }
@@ -196,5 +198,24 @@ class ServiceProviderController extends Controller
         $serviceProvider->update($validated);
 
         return back()->with('success', 'Availability updated.');
+    }
+
+    private function normalizeBangladeshPhone(string $phone): string
+    {
+        $digits = preg_replace('/\D+/', '', trim($phone));
+
+        if ($digits === '') {
+            return '+880';
+        }
+
+        if (str_starts_with($digits, '880')) {
+            $digits = substr($digits, 3);
+        }
+
+        if (str_starts_with($digits, '0')) {
+            $digits = substr($digits, 1);
+        }
+
+        return '+880'.$digits;
     }
 }
