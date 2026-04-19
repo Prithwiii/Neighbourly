@@ -10,15 +10,12 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\ServiceProviderReviewController;
-<<<<<<< HEAD
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobConfirmationController;
 use App\Http\Controllers\EnlistingController;
-=======
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\EmergencyController;
 use App\Http\Controllers\LocationController;
->>>>>>> c7877293008d94ef876af4351321ca18697edb73
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,15 +38,9 @@ Route::get('/services/{serviceProvider}', [ServiceProviderController::class, 'sh
 |--------------------------------------------------------------------------
 */ 
 Route::middleware(['auth'])->group(function () {
-<<<<<<< HEAD
     Route::get('/home', function () {
         return view('home');
     })->name('home');
-=======
-    //Route::get('/dashboard', function () {
-      //  return view('dashboard');
-    //})->name('dashboard');
->>>>>>> c7877293008d94ef876af4351321ca18697edb73
 
     Route::get('/home', function () {
         return view('home');
