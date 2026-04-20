@@ -43,7 +43,7 @@ class PostController extends Controller
 
             $filename = time() . '_' . $file->getClientOriginalName();
 
-            $file->storeAs('public/posts', $filename);
+            $file->storeAs('posts', $filename, 'public');
 
             $data['image'] = 'posts/' . $filename;
         }

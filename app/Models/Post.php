@@ -10,6 +10,8 @@ class Post extends Model
         'username',
         'content',
         'location',
+        'lat',
+        'lng',
         'image'
     ];
 }
