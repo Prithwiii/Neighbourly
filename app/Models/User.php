@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
         'lat',
         'lng',
         // note: is_admin is intentionally omitted to prevent mass assignment during registration
@@ -76,6 +77,30 @@ class User extends Authenticatable
     public function serviceProviderProfile(): HasOne
     {
         return $this->hasOne(ServiceProvider::class);
+    }
+
+    /**
+     * Volunteer profile linked to this user.
+     */
+    public function volunteerProfile(): HasOne
+    {
+        return $this->hasOne(VolunteerProfile::class);
+    }
+
+    /**
+     * Check-in requests posted by this user.
+     */
+    public function checkInRequests(): HasMany
+    {
+        return $this->hasMany(CheckInRequest::class, 'user_id');
+    }
+
+    /**
+     * Check-in assignments where this user is the volunteer.
+     */
+    public function checkInAssignments(): HasMany
+    {
+        return $this->hasMany(CheckInAssignment::class, 'volunteer_id');
     }
 
     /**

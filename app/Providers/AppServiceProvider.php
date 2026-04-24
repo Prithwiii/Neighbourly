@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 
 use App\Models\MarketplaceItem;
 
@@ -45,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
 
             $unreadCount = 0;
 
-            if (\Illuminate\Support\Facades\Auth::check()) {
+                        if (\Illuminate\Support\Facades\Auth::check() && Schema::hasTable('notifications')) {
               $unreadCount = \Illuminate\Support\Facades\Auth::user()
                 ->unreadNotifications()
                 ->count();
