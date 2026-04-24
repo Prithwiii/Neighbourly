@@ -9,6 +9,7 @@ use App\Http\Controllers\LostItemController;
 use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ProfileController;
 use App\Models\DonationPost;
 use App\Models\EmergencyAlert;
@@ -93,6 +94,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/news', [NewsController::class, 'index'])
         ->name('news.index');
+
+    Route::get('/weather', [WeatherController::class, 'index'])
+        ->name('weather.index');
 
     Route::get('/emergency-alerts', [EmergencyAlertController::class, 'index'])
         ->name('emergency-alerts.index');
