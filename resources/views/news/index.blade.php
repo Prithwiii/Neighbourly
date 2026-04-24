@@ -2,85 +2,84 @@
 
 @section('content')
 
-<!-- SCROLL FIX (overrides app.blade overflow-hidden) -->
+<div class="max-w-6xl mx-auto space-y-8">
 
-{{-- <div class="h-[calc(100vh-7rem)] overflow-y-auto px-6"> --}}
+    <!-- PAGE HEADER -->
+    <div class="grid md:grid-cols-2 gap-8 items-center">
 
-```
-<div class="max-w-6xl mx-auto">
+        <!-- LEFT: TEXT -->
+        <div class="space-y-4">
+            <h1 class="text-4xl md:text-5xl font-bold text-emerald-700">
+                Stay Updated
+            </h1>
 
-    <!-- FILTER BAR -->
-    <div class="mb-6 p-6 rounded-2xl
-                bg-white/20 backdrop-blur-xl
-                border border-white/30 shadow-xl">
+            <p class="text-gray-700 text-lg">
+                Discover what's happening around the world. Filter, explore, and stay informed with curated news.
+            </p>
+        </div>
 
-        <form method="GET" action="{{ route('news.index') }}"
-              class="flex flex-wrap gap-4 items-end justify-between">
+        <!-- RIGHT: FILTER CARD -->
+        <div class="p-6 rounded-3xl
+                    bg-white/30 backdrop-blur-xl
+                    border border-white/40 shadow-2xl">
 
-            <div class="flex-1 min-w-xs">
-                <label class="text-sm text-gray-700">Search</label>
-                <input type="text" name="query" value="{{ $query ?? '' }}"
-                    placeholder="Search news..."
-                    class="block mt-1 w-full rounded-lg border-gray-300 px-3 py-2">
-            </div>
+            <form method="GET" action="{{ route('news.index') }}"
+                  class="space-y-4">
 
-            <div>
-                <label class="text-sm text-gray-700">Sort</label>
-                <select name="sort"
-                    class="block mt-1 rounded-lg border-gray-300 px-3 py-2">
-                    <option value="publishedAt" {{ $sortBy === 'publishedAt' ? 'selected' : '' }}>Newest</option>
-                    <option value="popularity"  {{ $sortBy === 'popularity'  ? 'selected' : '' }}>Popularity</option>
-                </select>
-            </div>
+                <div>
+                    <label class="text-sm text-gray-700">Search</label>
+                    <input type="text" name="query" value="{{ $query ?? '' }}"
+                        placeholder="Search news..."
+                        class="mt-1 w-full rounded-xl border-gray-300 px-3 py-2 focus:ring-emerald-500 focus:border-emerald-500">
+                </div>
 
-            <div>
-                <label class="text-sm text-gray-700">From</label>
-                <input type="date" name="from" value="{{ $from }}"
-                    class="block mt-1 rounded-lg border-gray-300 px-3 py-2">
-            </div>
+                <div class="grid grid-cols-2 gap-3">
 
-            <div>
-                <label class="text-sm text-gray-700">To</label>
-                <input type="date" name="to" value="{{ $to }}"
-                    class="block mt-1 rounded-lg border-gray-300 px-3 py-2">
-            </div>
+                    <div>
+                        <label class="text-sm text-gray-700">Sort</label>
+                        <select name="sort"
+                            class="mt-1 w-full rounded-xl border-gray-300 px-3 py-2">
+                            <option value="publishedAt" {{ $sortBy === 'publishedAt' ? 'selected' : '' }}>Newest</option>
+                            <option value="popularity"  {{ $sortBy === 'popularity'  ? 'selected' : '' }}>Popularity</option>
+                        </select>
+                    </div>
 
-            <div class="flex gap-2">
-                <button class="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700">
-                    Apply
-                </button>
+                    <div>
+                        <label class="text-sm text-gray-700">From</label>
+                        <input type="date" name="from" value="{{ $from }}"
+                            class="mt-1 w-full rounded-xl border-gray-300 px-3 py-2">
+                    </div>
 
-                <a href="{{ route('news.index') }}"
-                   class="bg-gray-300 px-4 py-2 rounded-lg hover:bg-gray-400">
-                    Reset
-                </a>
-            </div>
+                    <div>
+                        <label class="text-sm text-gray-700">To</label>
+                        <input type="date" name="to" value="{{ $to }}"
+                            class="mt-1 w-full rounded-xl border-gray-300 px-3 py-2">
+                    </div>
 
-        </form>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button class="flex-1 bg-emerald-600 text-white py-2 rounded-xl
+                                   hover:bg-emerald-700 transition shadow-md">
+                        Apply Filters
+                    </button>
+
+                    <a href="{{ route('news.index') }}"
+                       class="px-4 py-2 rounded-xl bg-white/40 hover:bg-white/60
+                              border border-white/30 text-gray-700 transition">
+                        Reset
+                    </a>
+                </div>
+
+            </form>
+        </div>
+
     </div>
 
-    {{-- <!-- TABS -->
-    @php
-        $categories = ['all', 'technology', 'business', 'sports', 'health'];
-        $activeTab = request('category', 'all');
-    @endphp
 
-    <div class="mb-6 flex gap-3 flex-wrap">
-        @foreach($categories as $cat)
-            <a href="{{ route('news.index', array_merge(request()->all(), ['category' => $cat])) }}"
-               class="px-4 py-2 rounded-full text-sm
-               {{ $activeTab === $cat
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-white/30 text-gray-700 hover:bg-white/40' }}
-               backdrop-blur-md border border-white/30 shadow">
-                {{ ucfirst($cat) }}
-            </a>
-        @endforeach
-    </div> --}}
-
-    <!-- NEWS GRID -->
+    <!-- NEWS SECTION -->
     @if(empty($articles))
-        <div class="text-center text-gray-700">
+        <div class="text-center text-gray-700 py-10">
             No news articles found.
         </div>
     @else
@@ -88,35 +87,38 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-10">
 
             @foreach($articles as $article)
-                <div class="rounded-2xl overflow-hidden
-                            bg-white/20 backdrop-blur-xl
-                            border border-white/30 shadow-xl
-                            hover:shadow-2xl transition">
+                <div class="rounded-3xl overflow-hidden
+                            bg-white/30 backdrop-blur-xl
+                            border border-white/40 shadow-xl
+                            hover:shadow-2xl hover:-translate-y-1 transition duration-300">
 
                     @if($article['urlToImage'])
                         <img src="{{ $article['urlToImage'] }}"
-                             class="w-full h-40 object-cover">
+                             class="w-full h-44 object-cover">
                     @endif
 
-                    <div class="p-4">
+                    <div class="p-5 flex flex-col h-full">
 
-                        <h2 class="font-semibold text-lg mb-2">
+                        <h2 class="font-semibold text-lg text-gray-800 mb-2 leading-snug">
                             {{ $article['title'] }}
                         </h2>
 
-                        <p class="text-sm text-gray-700 mb-3">
+                        <p class="text-sm text-gray-600 mb-4 line-clamp-3">
                             {{ $article['description'] }}
                         </p>
 
-                        <div class="text-xs text-gray-600 mb-3">
+                        <div class="text-xs text-gray-500 mb-4">
                             {{ $article['source']['name'] }} —
                             {{ \Carbon\Carbon::parse($article['publishedAt'])->format('M d, Y') }}
                         </div>
 
-                        <a href="{{ $article['url'] }}" target="_blank"
-                           class="text-emerald-700 font-semibold hover:underline">
-                            Read more →
-                        </a>
+                        <div class="mt-auto">
+                            <a href="{{ $article['url'] }}" target="_blank"
+                               class="inline-block text-emerald-700 font-semibold
+                                      hover:text-emerald-800 transition">
+                                Read more →
+                            </a>
+                        </div>
 
                     </div>
                 </div>
@@ -125,9 +127,6 @@
         </div>
 
     @endif
-
-</div>
-```
 
 </div>
 

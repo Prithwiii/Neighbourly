@@ -2,70 +2,115 @@
 
 @section('content')
 
-<div class="flex justify-center mt-10">
-    <div class="w-[700px] p-8 rounded-3xl bg-white/20 backdrop-blur-xl border border-white/30 shadow-2xl">
+<div class="flex justify-center mt-10 px-4">
 
-        <h2 class="text-2xl font-bold text-emerald-900 mb-4">Job Details</h2>
+    <div class="w-full max-w-2xl p-8 rounded-3xl
+                bg-white/20 backdrop-blur-xl
+                border border-white/30 shadow-2xl">
 
-        <div class="space-y-2 text-gray-800">
-            <p><strong>Name:</strong> {{ $job->name }}</p>
-            <p><strong>Contact:</strong> {{ $job->contact }}</p>
-            <p><strong>Date:</strong> {{ $job->job_datetime }}</p>
-            <p><strong>Location:</strong> {{ $job->location }}</p>
-            <p><strong>Description:</strong> {{ $job->description }}</p>
-            <p><strong>Status:</strong> {{ ucfirst($job->status) }}</p>
+        <!-- TITLE -->
+        <h2 class="text-2xl font-bold text-emerald-900 mb-6">
+            Job Details
+        </h2>
+
+        <!-- BASIC INFO -->
+        <div class="space-y-3 text-gray-800">
+
+            <p><span class="font-semibold">Name:</span> {{ $job->name }}</p>
+            <p><span class="font-semibold">Contact:</span> {{ $job->contact }}</p>
+            <p><span class="font-semibold">Date:</span> {{ $job->job_datetime }}</p>
+            <p><span class="font-semibold">Location:</span> {{ $job->location }}</p>
+            <p><span class="font-semibold">Description:</span> {{ $job->description }}</p>
+            <p><span class="font-semibold">Status:</span> {{ ucfirst($job->status) }}</p>
+
         </div>
 
-        <hr class="my-5">
+        <hr class="my-6 border-white/30">
 
-        {{-- Selected Worker --}}
+        <!-- SELECTED WORKER -->
         @if($job->selectedEnlisting)
-            <p class="mb-3 text-emerald-900 font-semibold">
-                Selected Worker: {{ $job->selectedEnlisting->name }}
-            </p>
+            <div class="mb-4 p-3 rounded-xl bg-emerald-100/40 border border-emerald-200">
+                <p class="text-emerald-900 font-semibold">
+                    Selected Worker: {{ $job->selectedEnlisting->name }}
+                </p>
+            </div>
         @endif
 
-        {{-- Select Worker (Employer only) --}}
+        <!-- SELECT WORKER (EMPLOYER ONLY) -->
         @if(auth()->id() === $job->user_id && !$job->selected_enlisting_id)
 
-            <div class="space-y-2">
+            <div class="space-y-2 mb-6">
+
                 @foreach(\App\Models\Enlisting::all() as $e)
+
                     <form method="POST" action="{{ route('jobs.selectWorker', $job) }}">
                         @csrf
                         <input type="hidden" name="enlisting_id" value="{{ $e->id }}">
-                        <button class="w-full p-2 rounded-xl bg-white/30 hover:bg-white/40 border border-white/30">
-                            Select {{ $e->name }} ({{ $e->preferred_job }})
+
+                        <button type="submit"
+                                class="w-full p-3 rounded-xl
+                                       bg-white/30 hover:bg-white/40
+                                       border border-white/30 shadow
+                                       transition text-left">
+
+                            <span class="font-medium text-gray-800">
+                                Select {{ $e->name }}
+                            </span>
+
+                            <span class="text-xs text-gray-600 block">
+                                {{ $e->preferred_job }}
+                            </span>
+
                         </button>
                     </form>
+
                 @endforeach
+
             </div>
 
         @endif
 
-        <hr class="my-5">
+        <hr class="my-6 border-white/30">
 
-        {{-- Confirm Buttons --}}
+        <!-- CONFIRMATIONS -->
         @php $confirmation = $job->confirmation; @endphp
 
-        @if(auth()->id() === $job->user_id && !$confirmation?->employer_confirmed)
-            <form method="POST" action="{{ route('jobs.confirm', $job) }}">
-                @csrf
-                <button class="w-full py-2 rounded-xl bg-blue-400/60 hover:bg-blue-500/70 text-white">
-                    Confirm as Employer
-                </button>
-            </form>
-        @endif
+        <div class="space-y-3">
 
-        @if($job->selectedEnlisting && auth()->id() === $job->selectedEnlisting->user_id && !$confirmation?->worker_confirmed)
-            <form method="POST" action="{{ route('jobs.confirm', $job) }}">
-                @csrf
-                <button class="w-full py-2 mt-2 rounded-xl bg-green-400/60 hover:bg-green-500/70 text-white">
-                    Confirm as Worker
-                </button>
-            </form>
-        @endif
+            @if(auth()->id() === $job->user_id && !$confirmation?->employer_confirmed)
+
+                <form method="POST" action="{{ route('jobs.confirm', $job) }}">
+                    @csrf
+
+                    <button type="submit"
+                            class="w-full py-3 rounded-xl
+                                   bg-blue-500/70 hover:bg-blue-600/80
+                                   text-white shadow transition">
+                        Confirm as Employer
+                    </button>
+                </form>
+
+            @endif
+
+            @if($job->selectedEnlisting && auth()->id() === $job->selectedEnlisting->user_id && !$confirmation?->worker_confirmed)
+
+                <form method="POST" action="{{ route('jobs.confirm', $job) }}">
+                    @csrf
+
+                    <button type="submit"
+                            class="w-full py-3 rounded-xl
+                                   bg-emerald-500/70 hover:bg-emerald-600/80
+                                   text-white shadow transition">
+                        Confirm as Worker
+                    </button>
+                </form>
+
+            @endif
+
+        </div>
 
     </div>
+
 </div>
 
 @endsection
