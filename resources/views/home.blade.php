@@ -124,6 +124,13 @@
                      Weather
                 </a>
 
+            <a href="{{ route('check-ins.hub') }}"
+               class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
+                      backdrop-blur-md border border-white/30
+                      shadow-md hover:shadow-xl transition text-center text-emerald-900">
+                Check-ins
+            </a>
+
             <a href="{{ route('donation-posts.index') }}"
                class="p-5 rounded-2xl bg-white/30 hover:bg-white/40
                       backdrop-blur-md border border-white/30
