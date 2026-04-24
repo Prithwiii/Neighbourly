@@ -10,6 +10,11 @@ use App\Http\Controllers\MarketplaceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\CheckInRequestController;
+use App\Http\Controllers\CheckInAssignmentController;
+use App\Http\Controllers\CheckInRatingController;
+use App\Http\Controllers\CheckInMessageController;
+use App\Http\Controllers\VolunteerProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Models\DonationPost;
 use App\Models\EmergencyAlert;
@@ -97,6 +102,32 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/weather', [WeatherController::class, 'index'])
         ->name('weather.index');
+
+    /*
+    |------------------------------------------
+    | Check-in Requests
+    |------------------------------------------
+    */
+    Route::get('/check-ins', [CheckInRequestController::class, 'index'])->name('check-ins.hub');
+    Route::get('/check-ins/create', [CheckInRequestController::class, 'create'])->name('check-ins.create');
+    Route::post('/check-ins', [CheckInRequestController::class, 'store'])->name('check-ins.store');
+    Route::get('/check-ins/{checkIn}', [CheckInRequestController::class, 'show'])->name('check-ins.show');
+    Route::patch('/check-ins/{checkIn}/status', [CheckInRequestController::class, 'updateStatus'])->name('check-ins.update-status');
+
+    Route::post('/check-ins/{checkIn}/accept', [CheckInAssignmentController::class, 'accept'])->name('check-ins.accept');
+    Route::post('/check-ins/assignments/{assignment}/confirm', [CheckInAssignmentController::class, 'confirm'])->name('check-ins.confirm');
+    Route::post('/check-ins/assignments/{assignment}/complete', [CheckInAssignmentController::class, 'complete'])->name('check-ins.complete');
+    Route::post('/check-ins/assignments/{assignment}/cancel', [CheckInAssignmentController::class, 'cancel'])->name('check-ins.cancel');
+
+    Route::get('/check-ins/assignments/{assignment}/rate', [CheckInRatingController::class, 'create'])->name('check-ins.rate');
+    Route::post('/check-ins/assignments/{assignment}/rate', [CheckInRatingController::class, 'store'])->name('check-ins.rate.store');
+
+    Route::post('/check-ins/{checkIn}/messages', [CheckInMessageController::class, 'store'])->name('check-ins.messages.store');
+    Route::get('/check-ins/{checkIn}/messages', [CheckInMessageController::class, 'getMessages'])->name('check-ins.messages.get');
+
+    Route::get('/volunteers/{volunteer}', [VolunteerProfileController::class, 'show'])->name('volunteers.profile');
+    Route::get('/volunteer/profile/edit', [VolunteerProfileController::class, 'edit'])->name('volunteers.edit-profile');
+    Route::patch('/volunteer/profile', [VolunteerProfileController::class, 'update'])->name('volunteers.update-profile');
 
     Route::get('/emergency-alerts', [EmergencyAlertController::class, 'index'])
         ->name('emergency-alerts.index');
