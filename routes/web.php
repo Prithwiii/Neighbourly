@@ -18,6 +18,7 @@ use App\Http\Controllers\VolunteerProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Models\DonationPost;
 use App\Models\EmergencyAlert;
+use App\Models\LostItem;
 use App\Http\Controllers\ServiceProviderController;
 use App\Http\Controllers\ServiceProviderReviewController;
 use App\Http\Controllers\JobController;
@@ -33,7 +34,9 @@ use Illuminate\Support\Facades\Route;
 | PUBLIC ENTRY POINT
 |--------------------------------------------------------------------------
 */
-
+Route::get('/lost-items', function () {
+    return LostItem::select('location', 'description')->get();
+});
 Route::get('/', function () {
     return redirect('/login');
 });
