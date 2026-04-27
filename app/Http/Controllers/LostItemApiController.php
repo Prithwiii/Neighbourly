@@ -37,8 +37,8 @@ class LostItemApiController extends Controller
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $filename = time().'_'.$file->getClientOriginalName();
-            $file->storeAs('public/lost_items', $filename);
-            $data['image'] = 'lost_items/' . $filename;
+            $file->storeAs('public/lost-items', $filename);
+            $data['image'] = 'lost-items/' . $filename;
         }
 
         $item = LostItem::create($data);

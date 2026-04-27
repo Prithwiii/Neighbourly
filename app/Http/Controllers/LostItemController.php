@@ -32,7 +32,7 @@ class LostItemController extends Controller
 
         $data = [];
         $data['username'] = auth()->user()->name;
-        $data['location'] = auth()->user()->location;
+        $data['location'] = auth()->user()->location ?? 'Unknown';
         $data['phone'] = $request->phone;
         $data['description'] = $request->description;
         $data['date_lost'] = $request->date_lost;
@@ -57,25 +57,6 @@ class LostItemController extends Controller
             ->with('success', 'Lost item reported successfully!');
     }
 
-    public function show(LostItem $lostItem)
-    {
-        return view('lost-items.show', compact('lostItem'));
-    }
-
-    public function edit(LostItem $lostItem)
-    {
-        return view('lost-items.edit', compact('lostItem'));
-    }
-
-    public function update(Request $request, LostItem $lostItem)
-    {
-        //
-    }
-
-    public function destroy(LostItem $lostItem)
-    {
-        //
-    }
 
     public function search(Request $request)
     {
