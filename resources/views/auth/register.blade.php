@@ -43,10 +43,6 @@
                 <input type="text" name="name" value="{{ old('name') }}" required autofocus
                     class="w-full mt-1 p-3 rounded-lg bg-white/80
                            focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-
-                @error('name')
-                    <p class="text-red-300 text-sm mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- EMAIL -->
@@ -55,10 +51,6 @@
                 <input type="email" name="email" value="{{ old('email') }}" required
                     class="w-full mt-1 p-3 rounded-lg bg-white/80
                            focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-
-                @error('email')
-                    <p class="text-red-300 text-sm mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- PASSWORD -->
@@ -67,10 +59,6 @@
                 <input type="password" name="password" required
                     class="w-full mt-1 p-3 rounded-lg bg-white/80
                            focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-
-                @error('password')
-                    <p class="text-red-300 text-sm mt-1">{{ $message }}</p>
-                @enderror
             </div>
 
             <!-- CONFIRM PASSWORD -->
@@ -80,6 +68,10 @@
                     class="w-full mt-1 p-3 rounded-lg bg-white/80
                            focus:ring-2 focus:ring-emerald-500 focus:outline-none">
             </div>
+
+            <!-- ✅ LOCATION ADDED (IMPORTANT) -->
+            <input type="hidden" name="lat" id="lat">
+            <input type="hidden" name="lng" id="lng">
 
             <!-- BUTTON -->
             <button type="submit"
@@ -101,6 +93,18 @@
     </div>
 
 </div>
+
+<!-- ✅ LOCATION SCRIPT (IMPORTANT) -->
+<script>
+navigator.geolocation.getCurrentPosition(function(position) {
+
+    document.getElementById('lat').value = position.coords.latitude;
+    document.getElementById('lng').value = position.coords.longitude;
+
+}, function(error) {
+    console.log("Location permission denied");
+});
+</script>
 
 </body>
 </html>

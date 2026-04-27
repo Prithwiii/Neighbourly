@@ -15,6 +15,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
+        $middleware->api(append: [
+            \Illuminate\Session\Middleware\StartSession::class,
+        ]);
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
+            'donate/ipn',
+            'donation-posts/payments/ipn',
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

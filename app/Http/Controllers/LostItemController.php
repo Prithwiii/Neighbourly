@@ -22,15 +22,21 @@ class LostItemController extends Controller
     {
         // Validate input
         $request->validate([
-            'username' => 'required|string|max:255',
+            
             'phone' => 'required|string|max:50',
             'description' => 'required|string',
-            'location' => 'required|string|max:255',
+            
             'date_lost' => 'required|date',
             'image' => 'nullable|image|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = [];
+        $data['username'] = auth()->user()->name;
+        $data['location'] = auth()->user()->location;
+        $data['phone'] = $request->phone;
+        $data['description'] = $request->description;
+        $data['date_lost'] = $request->date_lost;
+
 
         // IMAGE UPLOAD FIXED
         if ($request->hasFile('image')) {

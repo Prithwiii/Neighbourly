@@ -5,9 +5,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Message;
 
 class User extends Authenticatable
 {
@@ -23,6 +23,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'lat',
+        'lng',
         // note: is_admin is intentionally omitted to prevent mass assignment during registration
     ];
 
@@ -66,5 +69,77 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->is_admin;
+    }
+
+    /**
+     * Provider profile linked to this user.
+     */
+    public function serviceProviderProfile(): HasOne
+    {
+        return $this->hasOne(ServiceProvider::class);
+    }
+
+    /**
+     * Volunteer profile linked to this user.
+     */
+    public function volunteerProfile(): HasOne
+    {
+        return $this->hasOne(VolunteerProfile::class);
+    }
+
+    /**
+     * Check-in requests posted by this user.
+     */
+    public function checkInRequests(): HasMany
+    {
+        return $this->hasMany(CheckInRequest::class, 'user_id');
+    }
+
+    /**
+     * Check-in assignments where this user is the volunteer.
+     */
+    public function checkInAssignments(): HasMany
+    {
+        return $this->hasMany(CheckInAssignment::class, 'volunteer_id');
+    }
+
+    /**
+     * Reviews made by this user on provider profiles.
+     */
+    public function serviceProviderReviews(): HasMany
+    {
+        return $this->hasMany(ServiceProviderReview::class);
+    }
+
+    /**
+     * Emergency alerts created by this user.
+     */
+    public function emergencyAlerts(): HasMany
+    {
+        return $this->hasMany(EmergencyAlert::class);
+    }
+
+    /**
+     * Comments made by this user on emergency alerts.
+     */
+    public function emergencyAlertComments(): HasMany
+    {
+        return $this->hasMany(EmergencyAlertComment::class);
+    }
+
+    /**
+     * Donation requests created by this user.
+     */
+    public function donationPosts(): HasMany
+    {
+        return $this->hasMany(DonationPost::class);
+    }
+
+    /**
+     * Donation transactions made by this user.
+     */
+    public function donationTransactions(): HasMany
+    {
+        return $this->hasMany(DonationTransaction::class);
     }
 }
