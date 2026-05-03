@@ -12,6 +12,8 @@ class LostItem extends Model
      'description',
      'location',
      'date_lost',
-     'image'
+     'image',
+     'freshness'
+
     ];
 }

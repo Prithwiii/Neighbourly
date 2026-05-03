@@ -25,7 +25,7 @@ class LostItemController extends Controller
             
             'phone' => 'required|string|max:50',
             'description' => 'required|string',
-            
+            'freshness'=> 'required|string',
             'date_lost' => 'required|date',
             'image' => 'nullable|image|max:2048',
         ]);
@@ -35,6 +35,7 @@ class LostItemController extends Controller
         $data['location'] = auth()->user()->location ?? 'Unknown';
         $data['phone'] = $request->phone;
         $data['description'] = $request->description;
+        $data['freshness'] = $request->freshness;
         $data['date_lost'] = $request->date_lost;
 
 
