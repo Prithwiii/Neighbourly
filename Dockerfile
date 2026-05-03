@@ -2,6 +2,10 @@ FROM php:8.2-apache
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo_pgsql pgsql
+    
+RUN apt-get update && apt-get install -y \
     unzip zip git curl libpng-dev libonig-dev libxml2-dev
 
 # Enable Apache rewrite
