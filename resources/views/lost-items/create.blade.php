@@ -63,25 +63,7 @@
                 
 
                     
-                    <div>   
-                      
-                        <select name="freshness" required
-                              class="w-full px-4 py-3 rounded-xl bg-white/70 border border-white/50 text-gray-800 focus:bg-white focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400 transition">
-                            <option value="">Select freshness...</option>
-                            <option value="10%" {{ old('freshness') === '10%' ? 'selected' : '' }}>10%</option>
-                            <option value="20%" {{ old('freshness') === '20%' ? 'selected' : '' }}>20%</option>
-                            <option value="30%" {{ old('freshness') === '30%' ? 'selected' : '' }}>30%</option>
-                            <option value="40%" {{ old('freshness') === '40%' ? 'selected' : '' }}>40%</option>
-                            <option value="50%" {{ old('freshness') === '50%' ? 'selected' : '' }}>50%</option>
-                            <option value="60%" {{ old('freshness') === '60%' ? 'selected' : '' }}>60%</option>
-                            <option value="70%" {{ old('freshness') === '70%' ? 'selected' : '' }}>70%</option>
-                            <option value="80%" {{ old('freshness') === '80%' ? 'selected' : '' }}>80%</option>
-                            <option value="90%" {{ old('freshness') === '90%' ? 'selected' : '' }}>90%</option>
-                            <option value="100%" {{ old('freshness') === '100%' ? 'selected' : '' }}>100%</option>
-                        </select>
-                       
-                        @error('freshness')<p class="text-red-400 text-xs mt-1">{{ $message }}</p>@enderror
-                    </div>
+            
 
                  
                    
