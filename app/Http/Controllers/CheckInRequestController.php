@@ -16,7 +16,13 @@ class CheckInRequestController extends Controller
 
         $requests = CheckInRequest::with(['requester', 'assignments.volunteer', 'activeAssignment.volunteer'])
             ->where('status', 'open')
-            ->orderByUrgency();
+            ->orderByRaw("
+                CASE
+                    WHEN urgency_level = 'high' THEN 1
+                    WHEN urgency_level = 'medium' THEN 2
+                    WHEN urgency_level = 'low' THEN 3
+                END
+            ");
 
         if ($userLat && $userLng) {
             $requests = $requests->get()
@@ -55,12 +61,19 @@ class CheckInRequestController extends Controller
 
         $checkIn = CheckInRequest::create($validated);
 
-        return redirect()->route('check-ins.show', $checkIn)->with('success', 'Check-in request created successfully!');
+        return redirect()->route('check-ins.show', $checkIn)
+            ->with('success', 'Check-in request created successfully!');
     }
 
     public function show(CheckInRequest $checkIn)
     {
-        $checkIn->load(['requester', 'assignments.volunteer.volunteerProfile', 'activeAssignment.volunteer.volunteerProfile', 'messages.sender']);
+        $checkIn->load([
+            'requester',
+            'assignments.volunteer.volunteerProfile',
+            'activeAssignment.volunteer.volunteerProfile',
+            'messages.sender'
+        ]);
+
         $activeAssignment = $checkIn->activeAssignment;
 
         return view('check-ins.show', compact('checkIn', 'activeAssignment'));
