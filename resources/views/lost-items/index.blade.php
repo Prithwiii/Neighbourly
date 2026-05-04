@@ -77,6 +77,7 @@
                                 <p class="text-gray-700 leading-relaxed">
                                     {{ $item->description }}
                                 </p>
+                             
 
                                 <a href="{{ route('map') }}?location={{ urlencode($item->location) }}"
                                    class="hover:text-emerald-600 transition">

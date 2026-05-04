@@ -60,6 +60,13 @@
                         class="w-full p-3 rounded-xl bg-white/60 border border-gray-200
                                focus:outline-none focus:ring-2 focus:ring-emerald-400"
                         required>
+                
+
+                    
+            
+
+                 
+                   
 
                     <input type="file" name="image"
                         class="w-full p-3 rounded-xl bg-white/60 border border-gray-200">
